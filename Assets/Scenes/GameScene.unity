@@ -419,12 +419,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d83d481acad0d5e48b196faee4424008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  maxSpeed: 1
-  brakingSpeed: 0.3
-  rotationSpeed: 100
-  test: 0.001
-  inputVec: {x: 0, y: 0}
-  movementDirection: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0}
   player: {fileID: 779762907}

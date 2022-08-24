@@ -5,18 +5,21 @@ namespace Asteroids.Controllers
 {
     public class GameController : MonoBehaviour
     {
+        private readonly float maxSpeed = 1f;
+        private readonly float brakingSpeed = 0.3f;
+        private readonly float rotationSpeed = 100f;
+        private readonly float velocityChangeMax = 0.003f;
+        private float velocityChange;
+        private float speed = 0f;
         private PlayerInput input;
-        public float speed = 0f;
-        public float maxSpeed = 1f;
-        public float brakingSpeed = 0.3f;
-        public float rotationSpeed = 100f;
-        public float test;
-        public Vector2 inputVec;
-        public Vector3 movementDirection;
-        public Vector3 rotation;
+        private Vector2 inputVec;
+        private Vector3 movementDirection;
+        private Vector3 potentialMovementDirection;
+        private Vector3 rotation;
+
         public GameObject player;
 
-        void Start ()
+        void Start()
         {
             input = new PlayerInput();
             input.Player.Enable();
@@ -26,23 +29,16 @@ namespace Asteroids.Controllers
         {
             if (input.Player.Move.IsPressed())
             {
-                ChangeForce();
+                HandleInput();
+            }
+            else
+            {
+                DecreaseValues();
             }
             Move();
         }
 
-        private void Move()
-        {
-            float speedDiff = speed - (brakingSpeed * Time.deltaTime);
-            speed = Mathf.Clamp(speedDiff, 0, speedDiff);
-
-            test = Mathf.Clamp(test, 0.3f, 1);
-            movementDirection = Vector3.Slerp(movementDirection, rotation, test);
-
-            player.transform.position += movementDirection * speed * Time.deltaTime;
-        }
-
-        private void ChangeForce()
+        private void HandleInput()
         {
             inputVec = input.Player.Move.ReadValue<Vector2>();
             inputVec *= Time.deltaTime;
@@ -52,9 +48,29 @@ namespace Asteroids.Controllers
 
             if (inputVec.y > 0)
             {
-                movementDirection = Vector3.Slerp(movementDirection, rotation, test);
+                if (speed < maxSpeed)
+                {
+                    movementDirection = potentialMovementDirection;
+                }
+                else
+                {
+                    movementDirection = Vector3.Slerp(movementDirection, rotation, velocityChangeMax);
+                }
                 speed = maxSpeed;
             }
+        }
+
+        private void DecreaseValues()
+        {
+            float newSpeed = speed - (brakingSpeed * Time.deltaTime);
+            speed = newSpeed < 0 ? 0 : newSpeed;
+            velocityChange = velocityChangeMax / (speed + velocityChangeMax);
+            potentialMovementDirection = Vector3.Slerp(movementDirection, rotation, velocityChange);
+        }
+
+        private void Move()
+        {
+            player.transform.position += movementDirection * speed * Time.deltaTime;
         }
     }
 }
