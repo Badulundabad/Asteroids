@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace Asteroids
+namespace Asteroids.Input
 {
     public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
