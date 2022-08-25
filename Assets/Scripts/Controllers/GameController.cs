@@ -33,11 +33,9 @@ namespace Asteroids.Controllers
         public GameObject asteroidPrefab;
         public GameObject flyingPlatePrefab;
 
-
         void Start()
         {
             player = Instantiate(playerPrefab);
-            flyingPlate = Instantiate(asteroidPrefab);
 
             input = new PlayerInput();
             input.Player.Enable();
@@ -64,8 +62,8 @@ namespace Asteroids.Controllers
 
         private void MovePlate()
         {
-            Vector3 dir = (player.transform.position - flyingPlate.transform.position).normalized;
-            flyingPlate.transform.position += dir * maxSpeed * Time.deltaTime;
+            //Vector3 dir = (player.transform.position - flyingPlate.transform.position).normalized;
+            //flyingPlate.transform.position += dir * maxSpeed * Time.deltaTime;
         }
 
         private void MoveAsteroids()
@@ -83,6 +81,13 @@ namespace Asteroids.Controllers
             for (int i = 0; i < asteroids.Count; i++)
             {
                 GameObject asteroid = asteroids.ElementAt(i).Key;
+                Collider2D collider = asteroid.GetComponent<Collider2D>();
+
+                if (collider.IsTouchingLayers())
+                {
+
+                }
+
                 float x = asteroid.transform.position.x;
                 float y = asteroid.transform.position.y;
                 bool canBeDestroied = x > xBound + offsetFromBound + 1 ||
