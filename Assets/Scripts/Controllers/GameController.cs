@@ -1,6 +1,6 @@
 using Asteroids.Input;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Asteroids.Controllers
@@ -24,14 +24,18 @@ namespace Asteroids.Controllers
         private float lastAsteroidTime;
         private Dictionary<GameObject, Vector3> asteroids;
         private float xBound, yBound;
-        private float asteroidSpeed = 0.25f;
+        private float asteroidSpeed = 0.5f;
 
         public Camera mainCamera;
         public GameObject player;
+        public GameObject playerPrefab;
         public GameObject asteroidPrefab;
+        public GameObject flyingPlatePrefab;
 
         void Start()
         {
+            player = Instantiate(playerPrefab);
+
             input = new PlayerInput();
             input.Player.Enable();
 
@@ -39,13 +43,25 @@ namespace Asteroids.Controllers
 
             yBound = Camera.main.orthographicSize;
             xBound = yBound * Screen.width / Screen.height;
-            lastAsteroidTime = Time.time;
-            HandleAsteroids();
         }
 
         void Update()
         {
             HandlePlayer();
+
+            if (asteroids.Count < maxAsteroids && Time.time - lastAsteroidTime > 6)
+            {
+                lastAsteroidTime = Time.time;
+                CreateAsteroid();
+            }
+
+            MoveAsteroids();
+
+            CheckAsteroidPositions();
+        }
+
+        private void MoveAsteroids()
+        {
             foreach (var kvp in asteroids)
             {
                 Vector3 pos = kvp.Key.transform.position;
@@ -54,34 +70,48 @@ namespace Asteroids.Controllers
             }
         }
 
-        private void HandleAsteroids()
+        private void CheckAsteroidPositions()
         {
-            if (asteroids.Count < maxAsteroids)
+            for (int i = 0; i < asteroids.Count; i++)
             {
-                GameObject asteroid = Instantiate(asteroidPrefab);
-
-                Vector3 position = GetBoundRandomPositionByVariant();
-                asteroid.transform.position = position;
-                Vector3 direction = GetRandomVectorToCenterByVariant(position);
-
-                asteroids.Add(asteroid, direction);
+                GameObject asteroid = asteroids.ElementAt(i).Key;
+                float x = asteroid.transform.position.x;
+                float y = asteroid.transform.position.y;
+                bool canBeDestroied = x > xBound + offsetFromBound + 1 ||
+                                      x < -xBound - offsetFromBound - 1 ||
+                                      y > yBound + offsetFromBound + 1 ||
+                                      y < -yBound - offsetFromBound - 1;
+                if (canBeDestroied)
+                {
+                    asteroids.Remove(asteroid);
+                    Destroy(asteroid);
+                }
             }
         }
 
-        private float offsetFromBound = 0.5f;
-        private float offsetFromCorner = 1f;
-
-        private Vector3 GetRandomVectorToCenterByVariant(Vector3 position)
+        private void CreateAsteroid()
         {
-            float x = UnityEngine.Random.Range(-xBound + offsetFromBound, xBound - offsetFromBound);
-            float y = UnityEngine.Random.Range(-yBound + offsetFromBound, yBound - offsetFromBound);
+            GameObject asteroid = Instantiate(asteroidPrefab);
 
-            Vector3 toCenter = new Vector3(x, y, -1) - position;
+            Vector3 position = GetBoundRandomPosition();
+            asteroid.transform.position = position;
+            Vector3 direction = GetRandomVectorFromPosition(position);
 
-            return toCenter;
+            asteroids.Add(asteroid, direction);
         }
 
-        private Vector3 GetBoundRandomPositionByVariant()
+        private float offsetFromBound = 1f;
+        private float offsetFromCorner = 1f;
+
+        private Vector3 GetRandomVectorFromPosition(Vector3 position)
+        {
+            float x = Random.Range(-xBound + offsetFromBound, xBound - offsetFromBound);
+            float y = Random.Range(-yBound + offsetFromBound, yBound - offsetFromBound);
+
+            return (new Vector3(x, y, -1) - position).normalized;
+        }
+
+        private Vector3 GetBoundRandomPosition()
         {
             int num = UnityEngine.Random.Range(0, 3);
             float x, y;
@@ -137,7 +167,7 @@ namespace Asteroids.Controllers
         {
             float newSpeed = speed - (brakingSpeed * Time.deltaTime);
             speed = newSpeed < 0 ? 0 : newSpeed;
-            velocityChange = velocityChangeMax / (speed + velocityChangeMax);
+            velocityChange = velocityChangeMax / ((speed * 2) + velocityChangeMax);
             potentialMovementDirection = Vector3.Slerp(movementDirection, rotation, velocityChange);
         }
 
