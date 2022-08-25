@@ -18,6 +18,8 @@ namespace Asteroids.Controllers
         private Vector3 movementDirection;
         private Vector3 potentialMovementDirection;
         private Vector3 rotation;
+        private GameObject player;
+        private GameObject flyingPlate;
 
 
         private readonly float maxAsteroids = 10f;
@@ -27,14 +29,15 @@ namespace Asteroids.Controllers
         private float asteroidSpeed = 0.5f;
 
         public Camera mainCamera;
-        public GameObject player;
         public GameObject playerPrefab;
         public GameObject asteroidPrefab;
         public GameObject flyingPlatePrefab;
 
+
         void Start()
         {
             player = Instantiate(playerPrefab);
+            flyingPlate = Instantiate(asteroidPrefab);
 
             input = new PlayerInput();
             input.Player.Enable();
@@ -48,7 +51,7 @@ namespace Asteroids.Controllers
         void Update()
         {
             HandlePlayer();
-
+            MovePlate();
             if (asteroids.Count < maxAsteroids && Time.time - lastAsteroidTime > 6)
             {
                 lastAsteroidTime = Time.time;
@@ -56,8 +59,13 @@ namespace Asteroids.Controllers
             }
 
             MoveAsteroids();
-
             CheckAsteroidPositions();
+        }
+
+        private void MovePlate()
+        {
+            Vector3 dir = (player.transform.position - flyingPlate.transform.position).normalized;
+            flyingPlate.transform.position += dir * maxSpeed * Time.deltaTime;
         }
 
         private void MoveAsteroids()
@@ -89,7 +97,7 @@ namespace Asteroids.Controllers
             }
         }
 
-        private void CreateAsteroid()
+        private GameObject CreateAsteroid()
         {
             GameObject asteroid = Instantiate(asteroidPrefab);
 
@@ -98,6 +106,7 @@ namespace Asteroids.Controllers
             Vector3 direction = GetRandomVectorFromPosition(position);
 
             asteroids.Add(asteroid, direction);
+            return asteroid;
         }
 
         private float offsetFromBound = 1f;

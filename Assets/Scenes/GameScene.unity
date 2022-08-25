@@ -421,6 +421,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 519420031}
-  player: {fileID: 0}
   playerPrefab: {fileID: 2142997853719877428, guid: e698334747f381e4baf213f00306c37c, type: 3}
   asteroidPrefab: {fileID: 6584546019307168258, guid: 2a60b8ae1b490c843bd0984dac96dc01, type: 3}
+  flyingPlatePrefab: {fileID: 8164904713434302466, guid: a87a4a9a58669c6419f24f9c02c279ee, type: 3}
