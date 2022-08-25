@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8355824692209636972}
   - component: {fileID: 8355824692209636975}
   - component: {fileID: 8355824692209636974}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Salad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
