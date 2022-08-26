@@ -1,9 +1,12 @@
 {
-    "name": "Controllers",
-    "rootNamespace": "Asteroids.Controllers",
+    "name": "Installers",
+    "rootNamespace": "Asteroids.Installers",
     "references": [
+        "GUID:b8951c9b79cd1674495a527cbbaaf632",
+        "GUID:93004d4b99b6ef94f92ccac9662695bb",
         "GUID:502272cc572652e4cb5a5ccb7a4dff1c",
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:cb08ba82f1b85054c8a42bda75e4c857",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

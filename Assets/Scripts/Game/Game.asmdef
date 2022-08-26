@@ -1,7 +1,9 @@
 {
-	"name": "Models",
-    "rootNamespace": "Asteroids.Models",
-    "references": [],
+    "name": "Game",
+    "rootNamespace": "Asteroids.Game",
+    "references": [
+        "GUID:93004d4b99b6ef94f92ccac9662695bb"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

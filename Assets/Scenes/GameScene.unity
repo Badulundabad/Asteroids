@@ -284,7 +284,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313021882}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -369,7 +369,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582343541}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -385,6 +385,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1961602795}
+  - component: {fileID: 1961602797}
   - component: {fileID: 1961602796}
   m_Layer: 0
   m_Name: GameController
@@ -417,13 +418,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 1961602794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d83d481acad0d5e48b196faee4424008, type: 3}
+  m_Script: {fileID: 11500000, guid: 7733ea4aa23e5b944bf727252e40e274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 519420031}
-  playerPrefab: {fileID: 2142997853719877428, guid: e698334747f381e4baf213f00306c37c, type: 3}
-  asteroidPrefab: {fileID: 6584546019307168258, guid: 2a60b8ae1b490c843bd0984dac96dc01, type: 3}
-  flyingPlatePrefab: {fileID: 8164904713434302466, guid: a87a4a9a58669c6419f24f9c02c279ee, type: 3}
-  mask:
-    serializedVersion: 2
-    m_Bits: 64
+  playerShipModel: {fileID: 11400000, guid: 1ab9a46e519649341979928b336a9196, type: 2}
+  asteroidModel: {fileID: 11400000, guid: e5bed37fa8d6460409c0168e22d89d45, type: 2}
+  enemyModel: {fileID: 11400000, guid: 0ec3dc94f3841ea4dbdfbf40f82b09a5, type: 2}
+--- !u!114 &1961602797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961602794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 1961602796}
+  _installerPrefabs: []
+  _autoRun: 1
+  OnPreInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPreResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  _parentNewObjectsUnderSceneContext: 0
+  _contractNames: []
+  _parentContractNames: []
