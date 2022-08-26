@@ -1,0 +1,17 @@
+{
+    "name": "FlyingObjects",
+    "rootNamespace": "Asteroids.FlyingObjects",
+    "references": [
+        "GUID:502272cc572652e4cb5a5ccb7a4dff1c",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
