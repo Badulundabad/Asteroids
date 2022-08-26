@@ -1,4 +1,5 @@
 using Asteroids.FlyingObjects.Controllers;
+using Asteroids.FlyingObjects.Misc;
 using Asteroids.FlyingObjects.Models;
 using Asteroids.Game.Controllers;
 using Asteroids.Input;

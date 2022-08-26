@@ -1,4 +1,4 @@
-﻿namespace Asteroids.FlyingObjects.Models
+﻿namespace Asteroids.FlyingObjects.Misc
 {
     public class Tags
     {

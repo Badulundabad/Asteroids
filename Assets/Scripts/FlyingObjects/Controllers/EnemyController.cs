@@ -1,4 +1,6 @@
-﻿using Asteroids.FlyingObjects.Models;
+﻿using Asteroids.FlyingObjects.Misc;
+using Asteroids.FlyingObjects.Models;
+using Asteroids.FlyingObjects.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,7 +2,8 @@
 using Asteroids.FlyingObjects.Models;
 using UnityEngine;
 using System;
-using System.Threading.Tasks;
+using Asteroids.FlyingObjects.Objects;
+using Asteroids.FlyingObjects.Misc;
 
 namespace Asteroids.FlyingObjects.Controllers
 {
@@ -16,7 +17,6 @@ namespace Asteroids.FlyingObjects.Controllers
         private PlayerShip player;
         private PlayerShipModel model;
         public event Action OnDestroy;
-        public event Action OnDefeat;
 
         public PlayerController(PlayerInput input, PlayerShipModel model)
         {

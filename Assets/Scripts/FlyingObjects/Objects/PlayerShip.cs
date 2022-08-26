@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Asteroids.FlyingObjects.Models
+namespace Asteroids.FlyingObjects.Objects
 {
     public class PlayerShip : FlyingObject
     {

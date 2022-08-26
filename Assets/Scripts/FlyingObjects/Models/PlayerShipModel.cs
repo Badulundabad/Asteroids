@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Asteroids.FlyingObjects.Objects;
+using UnityEngine;
 
 namespace Asteroids.FlyingObjects.Models
 {

@@ -1,3 +1,4 @@
+using Asteroids.FlyingObjects.Objects;
 using UnityEngine;
 using Zenject;
 
