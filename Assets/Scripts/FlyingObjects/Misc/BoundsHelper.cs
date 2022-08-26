@@ -6,7 +6,7 @@ namespace Asteroids.FlyingObjects.Misc
     {
         private float xBound, yBound;
         private readonly float offsetFromBoundNear = 0.8f;
-        private readonly float offsetFromBoundFar = 1f;
+        private readonly float offsetFromBoundFar = 1.2f;
         private readonly float offsetFromCorner = 1f;
 
         public BoundsHelper()
@@ -40,12 +40,12 @@ namespace Asteroids.FlyingObjects.Misc
             return new Vector3(x, y, -1f);
         }
 
-        public bool IsPositionInBounds(Vector3 position)
+        public bool IsOutsideBounds(Vector3 position)
         {
-            return position.x < xBound + offsetFromBoundFar ||
-                   position.x > -xBound - offsetFromBoundFar ||
-                   position.y < yBound + offsetFromBoundFar ||
-                   position.y > -yBound - offsetFromBoundFar;
+            return position.x > xBound + offsetFromBoundFar ||
+                   position.x < -xBound - offsetFromBoundFar ||
+                   position.y > yBound + offsetFromBoundFar ||
+                   position.y < -yBound - offsetFromBoundFar;
         }
     }
 }

@@ -45,8 +45,7 @@ namespace Asteroids.FlyingObjects.Models
 
         private void CheckPosition(T obj)
         {
-            if (boundsHelper.IsPositionInBounds(obj.Position)) return;
-
+            if (!boundsHelper.IsOutsideBounds(obj.Position)) return;
             OnLeaveBounds?.Invoke(obj);
         }
     }
