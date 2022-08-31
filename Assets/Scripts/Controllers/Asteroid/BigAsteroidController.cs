@@ -45,7 +45,6 @@ namespace Asteroids.Controllers
             SpaceObjectMover.MoveGroup(asteroids);
         }
 
-        // fix this Quaternion.identity
         private void SpawnAsteroid()
         {
             Vector2 position = BoundsHelper.GetInBoundsRandomPosition();

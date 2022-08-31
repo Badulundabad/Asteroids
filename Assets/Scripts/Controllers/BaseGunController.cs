@@ -37,7 +37,6 @@ namespace Asteroids.Controllers
             SpaceObjectMover.MoveGroup(projectiles);
         }
 
-        // fix Quaternion
         public void OnShoot(SpaceActionEventArgs args)
         {
             var projectile = factory.Create(args.position, args.direction, args.rotation, OnCollision);

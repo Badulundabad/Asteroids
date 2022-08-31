@@ -34,8 +34,6 @@ namespace Asteroids.Controllers
             SpaceObjectMover.MoveGroup(asteroids);
         }
 
-        // correct this to direction with small random deviation
-        // and fix Quaternion.identity
         public void SpawnAsteroids(Vector2 position)
         {
             for (int i = 0; i < 3; i++)
