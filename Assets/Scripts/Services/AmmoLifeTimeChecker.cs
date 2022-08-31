@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Asteroids.Model;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Asteroids.Model.Services
+namespace Asteroids.Services
 {
     public class AmmoLifeTimeChecker
     {

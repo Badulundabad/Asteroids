@@ -1,6 +1,6 @@
 ﻿using Asteroids.Misc;
 using Asteroids.Model;
-using Asteroids.Model.Services;
+using Asteroids.Services;
 using Asteroids.View;
 using System;
 using System.Collections.Generic;

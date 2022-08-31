@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Asteroids.Misc
+namespace Asteroids.Services
 {
     public static class BoundsHelper
     {

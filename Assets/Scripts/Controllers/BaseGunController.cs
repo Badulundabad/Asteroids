@@ -1,5 +1,5 @@
 ﻿using Asteroids.Model;
-using Asteroids.Model.Services;
+using Asteroids.Services;
 using Asteroids.View;
 using System.Collections.Generic;
 using UnityEngine;

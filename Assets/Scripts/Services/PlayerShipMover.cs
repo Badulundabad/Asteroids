@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Asteroids.Model;
+using UnityEngine;
 
-namespace Asteroids.Model
+namespace Asteroids.Services
 {
     public class PlayerShipMover
     {

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Asteroids.Model;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Asteroids.Model
+namespace Asteroids.Services
 {
     public class SpaceObjectRotator
     {
