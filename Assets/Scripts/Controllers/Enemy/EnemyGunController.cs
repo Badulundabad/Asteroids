@@ -13,14 +13,13 @@ namespace Asteroids.Controllers
 
         public EnemyGunController(ISpaceObjectFactory<Ammo> factory) : base(factory) { }
 
-        protected override void OnCollision(SpaceObjectView view, GameObject obj)
+        protected override void OnCollision(SpaceObjectView who, GameObject withWhom)
         {
-            if (obj.tag == Tags.PLAYER)
+            if (withWhom.tag == Tags.PLAYER)
             {
-                Vector2 position = view.model.Position;
-                Vector2 direction = view.model.Velocity;
-                projectiles.Remove(view.model as Ammo);
-                GameObject.Destroy(view.gameObject);
+                Vector2 position = who.model.Position;
+                Vector2 direction = who.model.Velocity;
+                Destroy(who.model as Ammo);
                 OnDestroy?.Invoke(new SpaceActionEventArgs(position, direction, Quaternion.identity));
             }
         }

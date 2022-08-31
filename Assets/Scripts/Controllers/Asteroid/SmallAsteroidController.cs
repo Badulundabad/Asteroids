@@ -3,35 +3,26 @@ using Asteroids.Model;
 using Asteroids.Services;
 using Asteroids.View;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Asteroids.Controllers
 {
-    public class SmallAsteroidController : IController
+    public class SmallAsteroidController : BaseObjectController<SpaceObject>
     {
-        private List<SpaceObject> asteroids;
-        private ISpaceObjectFactory<SpaceObject> factory;
-
-        public bool IsRunning { get; private set; }
         public event Action<SpaceActionEventArgs> OnDestroy;
 
-        public SmallAsteroidController(ISpaceObjectFactory<SpaceObject> factory)
-        {
-            this.factory = factory;
-            asteroids = new List<SpaceObject>();
-        }
+        public SmallAsteroidController(ISpaceObjectFactory<SpaceObject> factory) : base(factory) { }
 
-        public void Start()
+        public override void Start()
         {
             IsRunning = true;
         }
 
-        public void Update()
+        public override void Update()
         {
-            SpaceObjectTeleporter.TeleportIfLeaveBoundsGroup(asteroids);
-            SpaceObjectRotator.RotateGroup(asteroids);
-            SpaceObjectMover.MoveGroup(asteroids);
+            SpaceObjectTeleporter.TeleportIfLeaveBoundsGroup(objects);
+            SpaceObjectRotator.RotateGroup(objects);
+            SpaceObjectMover.MoveGroup(objects);
         }
 
         public void SpawnAsteroids(Vector2 position)
@@ -40,18 +31,17 @@ namespace Asteroids.Controllers
             {
                 Vector2 direction = BoundsHelper.GetRandomInBoundsDirection(position);
                 var asteroid = factory.Create(position, direction, Quaternion.identity, OnCollision);
-                asteroids.Add(asteroid);
+                objects.Add(asteroid);
             }
         }
 
-        private void OnCollision(SpaceObjectView view, GameObject obj)
+        private void OnCollision(SpaceObjectView who, GameObject withWhom)
         {
-            if (obj.tag == Tags.PLAYERAMMO || obj.tag == Tags.ENEMYAMMO)
+            if (withWhom.tag == Tags.PLAYERAMMO || withWhom.tag == Tags.ENEMYAMMO)
             {
-                Vector2 position = view.model.Position;
-                Vector2 direction = view.model.Velocity;
-                asteroids.Remove(view.model);
-                GameObject.Destroy(view.gameObject);
+                Vector2 position = who.model.Position;
+                Vector2 direction = who.model.Velocity;
+                Destroy(who.model);
                 OnDestroy?.Invoke(new SpaceActionEventArgs(position, direction, Quaternion.identity));
             }
         }

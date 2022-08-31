@@ -72,6 +72,7 @@ public class GameStarter : MonoBehaviour
         playerController.OnPlayerSpawned += (ship) => enemyController.SetTarget(ship);
         playerController.OnPlayerSpawned += (ship) => uiController.UpdateModel(ship);
         playerController.OnDestroy += (eventArgs) => uiController.OnPlayerDestroy();
+        playerController.OnDestroy += (eventArgs) => OnPlayerDestroy();
         playerController.OnFireSlot1 += (eventArgs) => playerGunController.OnShoot(eventArgs);
         bigAsteroidController.OnDestroy += (eventArgs) => smallAsteroidController.SpawnAsteroids(eventArgs.position);
         //playerController.OnFireSlot2 += (position, direction) => uiController.OnPlayerDestroy();
@@ -83,6 +84,14 @@ public class GameStarter : MonoBehaviour
         foreach (var controller in controllers)
         {
             controller.Start();
+        }
+    }
+
+    private void OnPlayerDestroy()
+    {
+        foreach (var controller in controllers)
+        {
+            controller.Stop();
         }
     }
 

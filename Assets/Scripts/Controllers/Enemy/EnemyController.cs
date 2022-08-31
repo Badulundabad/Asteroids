@@ -3,46 +3,42 @@ using Asteroids.Model;
 using Asteroids.Services;
 using Asteroids.View;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Asteroids.Controllers
 {
-    public class EnemyController : IController
+    public class EnemyController : BaseObjectController<EnemyShip>
     {
         private readonly float enemyFrequency = 20f;
 
         private float lastTimeEnemySpawned;
-        private List<Enemy> enemies;
-        private ISpaceObjectFactory<Enemy> factory;
         private TargetUpdater targetUpdater;
 
-        public bool IsRunning { get; private set; }
         public event Action<SpaceActionEventArgs> OnDestroy;
 
 
-        public EnemyController(ISpaceObjectFactory<Enemy> factory)
+        public EnemyController(ISpaceObjectFactory<EnemyShip> factory) : base(factory)
         {
-            this.factory = factory;
-            enemies = new List<Enemy>();
             targetUpdater = new TargetUpdater();
         }
 
-        public void Start()
+        public override void Start()
         {
             IsRunning = true;
         }
 
-        public void Update()
+        public override void Update()
         {
-            if (lastTimeEnemySpawned < Time.time - enemyFrequency && enemies.Count < 6f)
+            if (!IsRunning) return;
+
+            if (lastTimeEnemySpawned < Time.time - enemyFrequency && objects.Count < 2f)
             {
                 SpawnRandomEnemy();
                 lastTimeEnemySpawned = Time.time;
             }
-
-            SpaceObjectTeleporter.TeleportIfLeaveBoundsGroup(enemies);
-            SpaceObjectMover.MoveGroup(enemies);
+            targetUpdater.Update();
+            SpaceObjectTeleporter.TeleportIfLeaveBoundsGroup(objects);
+            SpaceObjectMover.MoveGroup(objects);
         }
 
         public void SetTarget(SpaceObject target)
@@ -54,18 +50,17 @@ namespace Asteroids.Controllers
         {
             Vector2 position = BoundsHelper.GetInBoundsRandomPosition();
             var enemy = factory.Create(position, Vector2.zero, Quaternion.identity, OnCollision);
-            enemies.Add(enemy);
+            objects.Add(enemy);
             targetUpdater.AddSpaceObject(enemy);
         }
 
-        private void OnCollision(SpaceObjectView view, GameObject obj)
+        private void OnCollision(SpaceObjectView who, GameObject withWhom)
         {
-            if (obj.tag == Tags.PLAYER || obj.tag == Tags.PLAYERAMMO)
+            if (withWhom.tag == Tags.PLAYER || withWhom.tag == Tags.PLAYERAMMO)
             {
-                Vector2 position = view.model.Position;
-                Vector2 direction = view.model.Velocity;
-                enemies.Remove(view.model as Enemy);
-                GameObject.Destroy(view.gameObject);
+                Vector2 position = who.model.Position;
+                Vector2 direction = who.model.Velocity;
+                Destroy(who.model as EnemyShip);
                 OnDestroy?.Invoke(new SpaceActionEventArgs(position, direction, Quaternion.identity));
             }
         }

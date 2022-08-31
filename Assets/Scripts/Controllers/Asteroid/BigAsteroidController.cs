@@ -3,46 +3,37 @@ using Asteroids.Model;
 using Asteroids.Services;
 using Asteroids.View;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Asteroids.Controllers
 {
-    public class BigAsteroidController : IController
+    public class BigAsteroidController : BaseObjectController<SpaceObject>
     {
         private readonly float asteroidFrequency = 3f;
 
         private float lastTimeAsteroidSpawned;
-        private ISpaceObjectFactory<SpaceObject> factory;
-        private List<SpaceObject> asteroids;
-
-        public bool IsRunning { get; private set; }
         public event Action<SpaceActionEventArgs> OnDestroy;
 
 
-        public BigAsteroidController(ISpaceObjectFactory<SpaceObject> factory)
-        {
-            this.factory = factory;
-            asteroids = new List<SpaceObject>();
-        }
+        public BigAsteroidController(ISpaceObjectFactory<SpaceObject> factory) : base(factory) { }
 
-        public void Start()
+        public override void Start()
         {
             IsRunning = true;
         }
 
-        public void Update()
+        public override void Update()
         {
             if (!IsRunning) return;
 
-            if (lastTimeAsteroidSpawned < Time.time - asteroidFrequency && asteroids.Count < 6f)
+            if (lastTimeAsteroidSpawned < Time.time - asteroidFrequency && objects.Count < 6f)
             {
                 SpawnAsteroid();
                 lastTimeAsteroidSpawned = Time.time;
             }
-            SpaceObjectTeleporter.TeleportIfLeaveBoundsGroup(asteroids);
-            SpaceObjectRotator.RotateGroup(asteroids);
-            SpaceObjectMover.MoveGroup(asteroids);
+            SpaceObjectTeleporter.TeleportIfLeaveBoundsGroup(objects);
+            SpaceObjectRotator.RotateGroup(objects);
+            SpaceObjectMover.MoveGroup(objects);
         }
 
         private void SpawnAsteroid()
@@ -50,17 +41,16 @@ namespace Asteroids.Controllers
             Vector2 position = BoundsHelper.GetInBoundsRandomPosition();
             Vector2 direction = BoundsHelper.GetRandomInBoundsDirection(position);
             var asteroid = factory.Create(position, direction, Quaternion.identity, OnCollision);
-            asteroids.Add(asteroid);
+            objects.Add(asteroid);
         }
 
-        private void OnCollision(SpaceObjectView view, GameObject obj)
+        private void OnCollision(SpaceObjectView who, GameObject withWhom)
         {
-            if (obj.tag == Tags.PLAYERAMMO || obj.tag == Tags.ENEMYAMMO)
+            if (withWhom.tag == Tags.PLAYERAMMO || withWhom.tag == Tags.ENEMYAMMO)
             {
-                Vector2 position = view.model.Position;
-                Vector2 direction = view.model.Velocity;
-                asteroids.Remove(view.model);
-                GameObject.Destroy(view.gameObject);
+                Vector2 position = who.model.Position;
+                Vector2 direction = who.model.Velocity;
+                Destroy(who.model);
                 OnDestroy?.Invoke(new SpaceActionEventArgs(position, direction, Quaternion.identity));
             }
         }

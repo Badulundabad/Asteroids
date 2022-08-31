@@ -24,6 +24,11 @@ namespace Asteroids.Controllers
             IsRunning = true;
         }
 
+        public void Stop()
+        {
+            IsRunning = false;
+        }
+
         private void OnStartButtonClicked()
         {
             OnStartButtonClick?.Invoke();

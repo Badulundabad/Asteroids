@@ -8,23 +8,20 @@ using UnityEngine;
 
 namespace Asteroids.Controllers
 {
-    public class PlayerController : IController
+    public class PlayerController : BaseObjectController<Ship>
     {
         private PlayerInput input;
         private PlayerShipMover shipMover;
         private Ship ship;
-        private ISpaceObjectFactory<Ship> factory;
 
-        public bool IsRunning { get; private set; }
         public event Action<Ship> OnPlayerSpawned;
         public event Action<SpaceActionEventArgs> OnDestroy;
         public event Action<SpaceActionEventArgs> OnFireSlot1;
         public event Action<SpaceActionEventArgs> OnFireSlot2;
 
 
-        public PlayerController(ISpaceObjectFactory<Ship> factory)
+        public PlayerController(ISpaceObjectFactory<Ship> factory) : base(factory)
         {
-            this.factory = factory;
             input = new PlayerInput();
             input.Player.Fire1.performed += (context) => OnFireSlot1?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, ship.Rotation));
             input.Player.Fire2.performed += (context) => OnFireSlot2?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, Quaternion.identity));
@@ -32,15 +29,16 @@ namespace Asteroids.Controllers
             shipMover = new PlayerShipMover();
         }
 
-        public void Start()
+        public override void Start()
         {
             ship = factory.Create(Vector2.zero, Vector2.up, new Quaternion(0, 0, 0, 1), OnCollision);
+            objects.Add(ship);
             shipMover.SetShip(ship);
             OnPlayerSpawned?.Invoke(ship);
             IsRunning = true;
         }
 
-        public void Update()
+        public override void Update()
         {
             if (!IsRunning) return;
 
@@ -59,8 +57,7 @@ namespace Asteroids.Controllers
             IsRunning = false;
             Vector2 position = who.model.Position;
             Vector2 direction = who.model.Velocity;
-            GameObject.Destroy(who.gameObject);
-            GameObject.Destroy(ship);
+            Destroy(ship);
             OnDestroy?.Invoke(new SpaceActionEventArgs(position, direction, Quaternion.identity));
         }
     }
