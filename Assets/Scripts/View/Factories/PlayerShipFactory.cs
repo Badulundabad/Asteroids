@@ -15,7 +15,7 @@ namespace Asteroids.View.Factories
             this.prefab = prefab;
         }
 
-        public Ship Create(Vector2 position, Quaternion rotation, Action<SpaceObjectView, GameObject> onCollision)
+        public Ship Create(Vector2 position, Vector2 direction, Quaternion rotation, Action<SpaceObjectView, GameObject> onCollision)
         {
             GameObject instance = GameObject.Instantiate(prefab, position, rotation);
             SpaceObjectView view = null;
@@ -24,7 +24,7 @@ namespace Asteroids.View.Factories
                 var data = GameObject.Instantiate(model);
                 data.SetPosition(position);
                 data.SetRotation(rotation);
-                data.SetVelocity(rotation * Vector2.up);
+                data.SetVelocity(direction);
 
                 view.SetData(data);
                 view.OnCollision += (obj) => onCollision.Invoke(view, obj);

@@ -8,7 +8,7 @@ namespace Asteroids.Controllers
 {
     public class PlayerGunController : BaseGunController
     {
-        public event Action<Vector2, Vector2> OnDestroy;
+        public event Action<SpaceActionEventArgs> OnDestroy;
 
 
         public PlayerGunController(ISpaceObjectFactory<Ammo> factory) : base(factory) { }
@@ -21,7 +21,7 @@ namespace Asteroids.Controllers
                 Vector2 direction = view.model.Velocity;
                 projectiles.Remove(view.model as Ammo);
                 GameObject.Destroy(view.gameObject);
-                OnDestroy?.Invoke(position, direction);
+                OnDestroy?.Invoke(new SpaceActionEventArgs(position, direction, Quaternion.identity));
             }
         }
     }

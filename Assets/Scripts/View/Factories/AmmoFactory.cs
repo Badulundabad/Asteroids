@@ -23,7 +23,7 @@ namespace Asteroids.View.Factories
                 prefabs.Add(prefab3);
         }
 
-        public Ammo Create(Vector2 position, Quaternion rotation, Action<SpaceObjectView, GameObject> onCollision)
+        public Ammo Create(Vector2 position, Vector2 direction, Quaternion rotation, Action<SpaceObjectView, GameObject> onCollision)
         {
             int rnd = UnityEngine.Random.Range(0, prefabs.Count - 1);
             GameObject instance = GameObject.Instantiate(prefabs[rnd], position, rotation);
@@ -33,7 +33,7 @@ namespace Asteroids.View.Factories
                 var data = GameObject.Instantiate(model);
                 data.SetPosition(position);
                 data.SetRotation(rotation);
-                data.SetVelocity(rotation * Vector2.up);
+                data.SetVelocity(direction);
 
                 view.SetData(data);
                 view.OnCollision += (obj) => onCollision.Invoke(view, obj);

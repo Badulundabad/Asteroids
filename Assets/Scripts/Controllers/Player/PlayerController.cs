@@ -4,6 +4,7 @@ using Asteroids.Model;
 using Asteroids.View;
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Asteroids.Controllers
 {
@@ -14,26 +15,26 @@ namespace Asteroids.Controllers
         private Ship ship;
         private ISpaceObjectFactory<Ship> factory;
 
-        public bool IsRunning { get; private set;  }
+        public bool IsRunning { get; private set; }
         public event Action<Ship> OnPlayerSpawned;
-        public event Action<Vector2, Vector2> OnDestroy;
-        public event Action<Vector2, Vector2> OnFireSlot1;
-        public event Action<Vector2, Vector2> OnFireSlot2;
+        public event Action<SpaceActionEventArgs> OnDestroy;
+        public event Action<SpaceActionEventArgs> OnFireSlot1;
+        public event Action<SpaceActionEventArgs> OnFireSlot2;
 
 
         public PlayerController(ISpaceObjectFactory<Ship> factory)
         {
             this.factory = factory;
             input = new PlayerInput();
-            input.Player.Fire1.performed += (context) => OnFireSlot1?.Invoke(ship.Position, ship.Velocity);
-            input.Player.Fire2.performed += (context) => OnFireSlot2?.Invoke(ship.Position, ship.Velocity);
+            input.Player.Fire1.performed += (context) => OnFireSlot1?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, ship.Rotation));
+            input.Player.Fire2.performed += (context) => OnFireSlot2?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, Quaternion.identity));
             input.Enable();
             shipMover = new PlayerShipMover();
         }
 
         public void Start()
         {
-            ship = factory.Create(Vector2.zero, Quaternion.identity, OnCollision);
+            ship = factory.Create(Vector2.zero, Vector2.up, new Quaternion(0, 0, 0, 1), OnCollision);
             shipMover.SetShip(ship);
             OnPlayerSpawned?.Invoke(ship);
             IsRunning = true;
@@ -41,6 +42,8 @@ namespace Asteroids.Controllers
 
         public void Update()
         {
+            if (!IsRunning) return;
+
             if (input.Player.Move.IsPressed())
                 shipMover.Move(input.Player.Move.ReadValue<Vector2>());
             else
@@ -51,11 +54,12 @@ namespace Asteroids.Controllers
         {
             if (withWhom.tag == Tags.PLAYERAMMO) return;
 
+            IsRunning = false;
             Vector2 position = who.model.Position;
-            Vector2 velocity = who.model.Velocity;            
+            Vector2 direction = who.model.Velocity;
             GameObject.Destroy(who.gameObject);
             GameObject.Destroy(ship);
-            OnDestroy?.Invoke(position, velocity);
+            OnDestroy?.Invoke(new SpaceActionEventArgs(position, direction, Quaternion.identity));
         }
     }
 }

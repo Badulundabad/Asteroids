@@ -17,7 +17,7 @@ namespace Asteroids.Controllers
         private List<SpaceObject> asteroids;
 
         public bool IsRunning { get; private set; }
-        public event Action<Vector2, Vector2> OnDestroy;
+        public event Action<SpaceActionEventArgs> OnDestroy;
 
 
         public BigAsteroidController(ISpaceObjectFactory<SpaceObject> factory)
@@ -50,7 +50,7 @@ namespace Asteroids.Controllers
         {
             Vector2 position = BoundsHelper.GetInBoundsRandomPosition();
             Vector2 direction = BoundsHelper.GetRandomInBoundsDirection(position);
-            var asteroid = factory.Create(position, Quaternion.identity, OnCollision);
+            var asteroid = factory.Create(position, direction, Quaternion.identity, OnCollision);
             asteroids.Add(asteroid);
         }
 
@@ -62,7 +62,7 @@ namespace Asteroids.Controllers
                 Vector2 direction = view.model.Velocity;
                 asteroids.Remove(view.model);
                 GameObject.Destroy(view.gameObject);
-                OnDestroy?.Invoke(position, direction);
+                OnDestroy?.Invoke(new SpaceActionEventArgs(position, direction, Quaternion.identity));
             }
         }
     }

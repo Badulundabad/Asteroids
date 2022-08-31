@@ -30,11 +30,11 @@ namespace Asteroids.Controllers
             SpaceObjectTeleporter.TeleportIfLeaveBoundsGroup(projectiles);
             SpaceObjectMover.MoveGroup(projectiles);
         }
-        
+
         // fix Quaternion
-        public void Shoot(Vector2 position, Vector2 direction)
+        public void OnShoot(SpaceActionEventArgs args)
         {
-            var projectile = factory.Create(position, Quaternion.identity, OnCollision);
+            var projectile = factory.Create(args.position, args.direction, args.rotation, OnCollision);
             projectiles.Add(projectile);
         }
 

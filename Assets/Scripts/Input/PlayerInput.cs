@@ -237,7 +237,7 @@ namespace Asteroids.Input
                 {
                     ""name"": """",
                     ""id"": ""d2896a66-31aa-47ea-b076-3d3285624704"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

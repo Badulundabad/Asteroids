@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4733c84af3a35244288e989c657b558f, type: 3}
   m_Name: Ammo
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 3
   rotationSpeed: 0
   maxLifeTime: 3

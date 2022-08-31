@@ -73,8 +73,8 @@ public class GameStarter : MonoBehaviour
     {
         playerController.OnPlayerSpawned += (ship) => enemyController.SetTarget(ship);
         playerController.OnPlayerSpawned += (ship) => uiController.UpdateModel(ship);
-        playerController.OnDestroy += (position, direction) => uiController.OnPlayerDestroy();
-        playerController.OnFireSlot1 += (position, direction) => playerGunController.Shoot(position, direction);
+        playerController.OnDestroy += (eventArgs) => uiController.OnPlayerDestroy();
+        playerController.OnFireSlot1 += (eventArgs) => playerGunController.OnShoot(eventArgs);
         //playerController.OnFireSlot2 += (position, direction) => uiController.OnPlayerDestroy();
         uiController.OnStartButtonClick += () => OnStartButtonClick();
     }

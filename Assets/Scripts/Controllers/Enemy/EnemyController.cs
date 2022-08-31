@@ -18,7 +18,7 @@ namespace Asteroids.Controllers
         private TargetUpdater targetUpdater;
 
         public bool IsRunning { get; private set; }
-        public event Action<Vector2, Vector2> OnDestroy;
+        public event Action<SpaceActionEventArgs> OnDestroy;
 
 
         public EnemyController(ISpaceObjectFactory<Enemy> factory)
@@ -50,12 +50,10 @@ namespace Asteroids.Controllers
             targetUpdater.SetTarget(target);
         }
 
-        // fix QUaternion
         private void SpawnRandomEnemy()
         {
             Vector2 position = BoundsHelper.GetInBoundsRandomPosition();
-            Vector2 direction = BoundsHelper.GetRandomInBoundsDirection(position);
-            var enemy = factory.Create(position, Quaternion.identity, OnCollision);
+            var enemy = factory.Create(position, Vector2.zero, Quaternion.identity, OnCollision);
             enemies.Add(enemy);
             targetUpdater.AddSpaceObject(enemy);
         }
@@ -68,7 +66,7 @@ namespace Asteroids.Controllers
                 Vector2 direction = view.model.Velocity;
                 enemies.Remove(view.model as Enemy);
                 GameObject.Destroy(view.gameObject);
-                OnDestroy?.Invoke(position, direction);
+                OnDestroy?.Invoke(new SpaceActionEventArgs(position, direction, Quaternion.identity));
             }
         }
     }
