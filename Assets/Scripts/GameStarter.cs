@@ -75,6 +75,7 @@ public class GameStarter : MonoBehaviour
         playerController.OnPlayerSpawned += (ship) => uiController.UpdateModel(ship);
         playerController.OnDestroy += (eventArgs) => uiController.OnPlayerDestroy();
         playerController.OnFireSlot1 += (eventArgs) => playerGunController.OnShoot(eventArgs);
+        bigAsteroidController.OnDestroy += (eventArgs) => smallAsteroidController.SpawnAsteroids(eventArgs.position);
         //playerController.OnFireSlot2 += (position, direction) => uiController.OnPlayerDestroy();
         uiController.OnStartButtonClick += () => OnStartButtonClick();
     }

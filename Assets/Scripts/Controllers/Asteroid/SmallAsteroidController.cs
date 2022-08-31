@@ -36,11 +36,11 @@ namespace Asteroids.Controllers
 
         // correct this to direction with small random deviation
         // and fix Quaternion.identity
-        public void Spawn(Vector2 position, Vector2 direction)
+        public void SpawnAsteroids(Vector2 position)
         {
             for (int i = 0; i < 3; i++)
             {
-                direction = BoundsHelper.GetRandomInBoundsDirection(position);
+                Vector2 direction = BoundsHelper.GetRandomInBoundsDirection(position);
                 var asteroid = factory.Create(position, direction, Quaternion.identity, OnCollision);
                 asteroids.Add(asteroid);
             }
