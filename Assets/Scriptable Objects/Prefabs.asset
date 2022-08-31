@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b45b38deee341e4192a4c3922f59fa5, type: 3}
+  m_Name: Prefabs
+  m_EditorClassIdentifier: 
+  asteroidBig: {fileID: 6584546019307168258, guid: 2a60b8ae1b490c843bd0984dac96dc01, type: 3}
+  asteroidSmall: {fileID: 9132447404445801445, guid: 5c28470d3a10a2b4fbad823f9cee8d7c, type: 3}
+  bullet: {fileID: 432203989859401517, guid: ec95225e693adfa459117fee0d3d1289, type: 3}
+  enenmyShip: {fileID: 8164904713434302466, guid: a87a4a9a58669c6419f24f9c02c279ee, type: 3}
+  laser: {fileID: 7656339148795581019, guid: ffb6df62e04e6a448ba83d05d5e00d4b, type: 3}
+  playerShip: {fileID: 2142997853719877428, guid: e698334747f381e4baf213f00306c37c, type: 3}
+  enemyAmmo1: {fileID: 5659727868264934186, guid: c8006b1636e61724dac2a7ef8cdab826, type: 3}
+  enemyAmmo2: {fileID: 8355824692209636881, guid: cdf4d3911e596424a9631ba91a9523a8, type: 3}
+  enemyAmmo3: {fileID: 8247446705075299185, guid: 2916cf00aaf4fca42bc1155a901b41f2, type: 3}
