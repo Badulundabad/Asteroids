@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   rotationSpeed: 0
-  maxLifeTime: 3
+  maxLifeTime: 2
