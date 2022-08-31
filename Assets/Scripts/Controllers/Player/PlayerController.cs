@@ -44,6 +44,8 @@ namespace Asteroids.Controllers
         {
             if (!IsRunning) return;
 
+            SpaceObjectTeleporter.TeleportIfLeaveBoundsSingle(ship);
+
             if (input.Player.Move.IsPressed())
                 shipMover.Move(input.Player.Move.ReadValue<Vector2>());
             else
