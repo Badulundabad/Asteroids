@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09d12024bc1306648890914ef74cb658, type: 3}
+  m_Script: {fileID: 11500000, guid: 89cdda37c52aecf42882b5f2da7047c9, type: 3}
   m_Name: Enemy Ship
   m_EditorClassIdentifier: 
-  speed: 1.5
+  speed: 1
   rotationSpeed: 0
+  maxSpeed: 1
+  acceleration: 0
+  bulletFiringRate: 2

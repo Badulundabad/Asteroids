@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8469e3df40417d94ca725149f3ad9107, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d96d507b876b6e4596c58fcb7eaadef, type: 3}
   m_Name: Player Ship
   m_EditorClassIdentifier: 
   speed: 0
   rotationSpeed: 150
   maxSpeed: 2
   acceleration: 250
-  bulletFiringRate: 0.2
+  bulletFiringRate: 0.5
   laserChargeAmount: 10
   laserChargeTime: 3

@@ -1,19 +1,15 @@
-﻿using UnityEngine;
-
-namespace Asteroids.Model
+﻿namespace Asteroids.Model
 {
-    [CreateAssetMenu(fileName = "New Ammo", menuName = "Asteroids/Models/Ammo")]
     public class Ammo : SpaceObject
     {
-        [SerializeField] private float maxLifeTime;
+        public float MaxLifeTime { get; private set; }
+        public float LaunchTime { get; private set; }
 
-        public float MaxLifeTime { get => maxLifeTime; }
-        public float ShootTime { get; private set; }
-
-        public void RegisterShootTime()
+        public Ammo(float spped, float rotationSpeed, float maxLifeTime, float launchTime) 
+            : base(spped, rotationSpeed)
         {
-            if (ShootTime == 0)
-                ShootTime = Time.time;
+            MaxLifeTime = maxLifeTime;
+            LaunchTime = launchTime;
         }
     }
 }

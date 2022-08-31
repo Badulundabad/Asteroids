@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e40dce27b0824b8449a591b1713057ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 49789d81a980f9f4abe0a29b1f7e7788, type: 3}
   m_Name: Asteroid Small
   m_EditorClassIdentifier: 
   speed: 1.5

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asteroidBig: {fileID: 11400000, guid: d3bc72572feea9646844d13185947a35, type: 2}
   asteroidSmall: {fileID: 11400000, guid: e16b0ca922367da4387fbf728c3fb3ca, type: 2}
-  bullet: {fileID: 11400000, guid: 3fab6a7c2f55a6346b5cb8bcfad2883f, type: 2}
-  enemyAmmo: {fileID: 11400000, guid: 3fab6a7c2f55a6346b5cb8bcfad2883f, type: 2}
+  bullet: {fileID: 11400000, guid: fe921455a4a441a4caccfa4e8c754d53, type: 2}
+  enemyAmmo: {fileID: 11400000, guid: fe921455a4a441a4caccfa4e8c754d53, type: 2}
   enenmyShip: {fileID: 11400000, guid: 530b86e8bbb16f64aa30e3b41c02927e, type: 2}
-  laser: {fileID: 11400000, guid: 3fab6a7c2f55a6346b5cb8bcfad2883f, type: 2}
+  laser: {fileID: 11400000, guid: fe921455a4a441a4caccfa4e8c754d53, type: 2}
   playerShip: {fileID: 11400000, guid: 428cbf7b195f3184a8f98661cb616dad, type: 2}

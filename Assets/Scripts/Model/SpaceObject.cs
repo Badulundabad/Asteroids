@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
 
 namespace Asteroids.Model
-{
-    [CreateAssetMenu(fileName = "New Space Object", menuName = "Asteroids/Models/Space Object")]
-    public class SpaceObject : ScriptableObject
-    {
-        [SerializeField] private float speed;
-        [SerializeField] private float rotationSpeed;
-
-        public float Speed { get => speed; protected set => speed = value; }
-        public float RotationSpeed { get => rotationSpeed; }
+{    
+    public class SpaceObject
+    {       
+        public float Speed { get; protected set; }
+        public float RotationSpeed { get; protected set; }
         public Vector2 Position { get; protected set; }
         public Vector2 Velocity { get; protected set; }
         public Quaternion Rotation { get; protected set; }
+        
+        public SpaceObject(float speed, float rotationSpeed)
+        {
+            Speed = speed;
+            RotationSpeed = rotationSpeed;
+        }
 
         public void SetPosition(Vector2 position)
         {

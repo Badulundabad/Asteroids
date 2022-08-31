@@ -20,7 +20,7 @@ namespace Asteroids.Services
             for (int i = 0; i < ammos.Count; i++)
             {
                 Ammo ammo = ammos[i];
-                if (ammo.ShootTime < Time.time - ammo.MaxLifeTime)
+                if (ammo.LaunchTime < Time.time - ammo.MaxLifeTime)
                 {
                     OnLifeTimeExpired?.Invoke(ammo);
                 }
