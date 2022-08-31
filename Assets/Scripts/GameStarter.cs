@@ -2,14 +2,12 @@ using Asteroids.Controllers;
 using Asteroids.Model;
 using Asteroids.View;
 using Asteroids.View.Factories;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStarter : MonoBehaviour
 {
     // fix angle in view
-    // shooting
     // fix space movement
     // check all event subscriptions
     [SerializeField] private UIView uiView;
