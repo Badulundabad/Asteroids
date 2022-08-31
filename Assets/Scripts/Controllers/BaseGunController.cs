@@ -8,6 +8,7 @@ namespace Asteroids.Controllers
 {
     public abstract class BaseGunController : IController
     {
+        private AmmoLifeTimeChecker ammoLifeTimeChecker;
         protected List<Ammo> projectiles;
         protected ISpaceObjectFactory<Ammo> factory;
 
@@ -18,6 +19,8 @@ namespace Asteroids.Controllers
         {
             this.factory = factory;
             projectiles = new List<Ammo>();
+            ammoLifeTimeChecker = new AmmoLifeTimeChecker(projectiles);
+            ammoLifeTimeChecker.OnLifeTimeExpired += (ammo) => Destroy(ammo);
         }
 
         public void Start()
@@ -27,6 +30,9 @@ namespace Asteroids.Controllers
 
         public virtual void Update()
         {
+            if (!IsRunning) return;
+
+            ammoLifeTimeChecker.Check();
             SpaceObjectTeleporter.TeleportIfLeaveBoundsGroup(projectiles);
             SpaceObjectMover.MoveGroup(projectiles);
         }
@@ -39,5 +45,15 @@ namespace Asteroids.Controllers
         }
 
         protected abstract void OnCollision(SpaceObjectView who, GameObject withWhom);
+
+        private void Destroy(Ammo ammo)
+        {
+            SpaceObjectView view;
+            if (factory.TryGetView(ammo, out view))
+            {
+                GameObject.Destroy(view.gameObject);
+                projectiles.Remove(ammo);
+            }
+        }
     }
 }
