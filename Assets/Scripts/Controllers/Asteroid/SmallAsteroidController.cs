@@ -13,12 +13,18 @@ namespace Asteroids.Controllers
         private List<SpaceObject> asteroids;
         private ISpaceObjectFactory<SpaceObject> factory;
 
+        public bool IsRunning { get; private set; }
         public event Action<Vector2, Vector2> OnDestroy;
 
         public SmallAsteroidController(ISpaceObjectFactory<SpaceObject> factory)
         {
             this.factory = factory;
             asteroids = new List<SpaceObject>();
+        }
+
+        public void Start()
+        {
+            IsRunning = true;
         }
 
         public void Update()
@@ -42,7 +48,7 @@ namespace Asteroids.Controllers
 
         private void OnCollision(SpaceObjectView view, GameObject obj)
         {
-            if (obj.tag == Tags.PLAYER)
+            if (obj.tag == Tags.PLAYERAMMO || obj.tag == Tags.ENEMYAMMO)
             {
                 Vector2 position = view.model.Position;
                 Vector2 direction = view.model.Velocity;

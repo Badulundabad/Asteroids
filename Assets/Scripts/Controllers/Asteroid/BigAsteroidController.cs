@@ -16,6 +16,7 @@ namespace Asteroids.Controllers
         private ISpaceObjectFactory<SpaceObject> factory;
         private List<SpaceObject> asteroids;
 
+        public bool IsRunning { get; private set; }
         public event Action<Vector2, Vector2> OnDestroy;
 
 
@@ -25,8 +26,15 @@ namespace Asteroids.Controllers
             asteroids = new List<SpaceObject>();
         }
 
+        public void Start()
+        {
+            IsRunning = true;
+        }
+
         public void Update()
         {
+            if (!IsRunning) return;
+
             if (lastTimeAsteroidSpawned < Time.time - asteroidFrequency && asteroids.Count < 6f)
             {
                 SpawnAsteroid();
@@ -48,7 +56,7 @@ namespace Asteroids.Controllers
 
         private void OnCollision(SpaceObjectView view, GameObject obj)
         {
-            if (obj.tag == Tags.PLAYER)
+            if (obj.tag == Tags.PLAYERAMMO || obj.tag == Tags.ENEMYAMMO)
             {
                 Vector2 position = view.model.Position;
                 Vector2 direction = view.model.Velocity;

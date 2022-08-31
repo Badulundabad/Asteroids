@@ -11,10 +11,18 @@ namespace Asteroids.Controllers
         protected List<Ammo> projectiles;
         protected ISpaceObjectFactory<Ammo> factory;
 
+        public bool IsRunning { get; private set; }
+
+
         public BaseGunController(ISpaceObjectFactory<Ammo> factory)
         {
             this.factory = factory;
             projectiles = new List<Ammo>();
+        }
+
+        public void Start()
+        {
+            IsRunning = true;
         }
 
         public virtual void Update()

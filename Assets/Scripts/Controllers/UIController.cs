@@ -8,13 +8,20 @@ namespace Asteroids.Controllers
         private Ship model;
         private UIViewModel viewModel;
 
+        public bool IsRunning { get; private set; }
         public event Action OnStartButtonClick;
+
 
         public UIController(UIView view)
         {
             viewModel = new UIViewModel();
             view.SetModel(viewModel);
             view.OnStartButtonClick += () => OnStartButtonClicked();
+        }
+
+        public void Start()
+        {
+            IsRunning = true;
         }
 
         private void OnStartButtonClicked()

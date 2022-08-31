@@ -14,18 +14,19 @@ namespace Asteroids.Controllers
         private Ship ship;
         private ISpaceObjectFactory<Ship> factory;
 
+        public bool IsRunning { get; private set;  }
         public event Action<Ship> OnPlayerSpawned;
         public event Action<Vector2, Vector2> OnDestroy;
-        public event Action<Vector2, Vector2> OnShootGun;
-        public event Action<Vector2, Vector2> OnShootLaser;
+        public event Action<Vector2, Vector2> OnFireSlot1;
+        public event Action<Vector2, Vector2> OnFireSlot2;
 
 
         public PlayerController(ISpaceObjectFactory<Ship> factory)
         {
             this.factory = factory;
             input = new PlayerInput();
-            input.Player.Fire1.performed += (context) => OnShootGun?.Invoke(ship.Position, ship.Velocity);
-            input.Player.Fire2.performed += (context) => OnShootLaser?.Invoke(ship.Position, ship.Velocity);
+            input.Player.Fire1.performed += (context) => OnFireSlot1?.Invoke(ship.Position, ship.Velocity);
+            input.Player.Fire2.performed += (context) => OnFireSlot2?.Invoke(ship.Position, ship.Velocity);
             input.Enable();
             shipMover = new PlayerShipMover();
         }
@@ -35,6 +36,7 @@ namespace Asteroids.Controllers
             ship = factory.Create(Vector2.zero, Quaternion.identity, OnCollision);
             shipMover.SetShip(ship);
             OnPlayerSpawned?.Invoke(ship);
+            IsRunning = true;
         }
 
         public void Update()
@@ -47,7 +49,8 @@ namespace Asteroids.Controllers
 
         private void OnCollision(SpaceObjectView who, GameObject withWhom)
         {
-            if (withWhom.tag == Tags.PLAYER) return;
+            if (withWhom.tag == Tags.PLAYERAMMO) return;
+
             Vector2 position = who.model.Position;
             Vector2 velocity = who.model.Velocity;            
             GameObject.Destroy(who.gameObject);
