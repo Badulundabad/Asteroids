@@ -1,7 +1,6 @@
 ﻿using Asteroids.Model;
 using Asteroids.View;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Asteroids.Controllers
 {
@@ -19,17 +18,25 @@ namespace Asteroids.Controllers
             objects = new List<T>();
         }
 
-        public abstract void Start();
+        /// <summary>
+        /// Running the controller.
+        /// Warning! Please don't remove base implementation when overriding this method 
+        /// or make sure you set IsRunning on true.
+        /// </summary>
+        public virtual void Start()
+        {
+            IsRunning = true;
+        }
 
-        public void Stop()
+        /// <summary>
+        /// Stops working of the controller, erases all views in factory and clears list of mdoel objects.
+        /// Warning! Please don't remove base implementation when overriding this method.
+        /// </summary>
+        public virtual void Stop()
         {
             IsRunning = false;
             factory.EraseAll();
-            for (int i = 0; i < objects.Count; i++)
-            {
-                objects.Clear();
-            }
-            Debug.Log($"{objects.Count}");
+            objects.Clear();
         }
 
         public abstract void Update();
