@@ -13,7 +13,7 @@ namespace Asteroids.Controllers
         private readonly float enemyFrequency = 20f;
 
         private float lastTimeEnemySpawned;
-        private DestinationUpdater<EnemyShip> destinationUpdater;
+        private TargetDirectionSetter<EnemyShip> destinationUpdater;
         private GunLoadingChecker<EnemyShip> gunLoadingChecker;
         private SpaceObject target;
 
@@ -22,7 +22,7 @@ namespace Asteroids.Controllers
 
         public EnemyController(ISpaceObjectFactory<EnemyShip> factory) : base(factory)
         {
-            destinationUpdater = new DestinationUpdater<EnemyShip>(objects);
+            destinationUpdater = new TargetDirectionSetter<EnemyShip>(objects);
             gunLoadingChecker = new GunLoadingChecker<EnemyShip>(objects);
             gunLoadingChecker.OnGunLoaded += (ship) => OnGunLoaded(ship);
         }
