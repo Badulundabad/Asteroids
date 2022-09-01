@@ -4,19 +4,14 @@ using UnityEngine;
 
 namespace Asteroids.Services
 {
-    public class TargetUpdater
+    public class TargetDirectionSetter<T> where T : SpaceObject
     {
         private SpaceObject target;
-        private List<SpaceObject> spaceObjects;
+        private List<T> spaceObjects;
 
-        public TargetUpdater()
+        public TargetDirectionSetter(List<T> objects)
         {
-            spaceObjects = new List<SpaceObject>();
-        }
-
-        public void AddSpaceObject(SpaceObject obj)
-        {
-            spaceObjects.Add(obj);
+            spaceObjects = objects;
         }
 
         public void SetTarget(SpaceObject target)
@@ -26,14 +21,13 @@ namespace Asteroids.Services
 
         public void Update()
         {
+            if (target == null) return;
+
             for (int i = 0; i < spaceObjects.Count; i++)
             {
                 SpaceObject enemy = spaceObjects[i];
-                if (target != null)
-                {
-                    Vector2 velocity = target.Position - enemy.Position;
-                    enemy.SetVelocity(velocity);
-                }
+                Vector2 velocity = target.Position - enemy.Position;
+                enemy.SetVelocity(velocity);
             }
         }
     }

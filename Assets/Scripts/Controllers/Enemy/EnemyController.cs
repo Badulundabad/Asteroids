@@ -3,6 +3,7 @@ using Asteroids.Model;
 using Asteroids.Services;
 using Asteroids.View;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Asteroids.Controllers
@@ -12,14 +13,25 @@ namespace Asteroids.Controllers
         private readonly float enemyFrequency = 20f;
 
         private float lastTimeEnemySpawned;
-        private TargetUpdater targetUpdater;
+        private DestinationUpdater<EnemyShip> destinationUpdater;
+        private GunLoadingChecker<EnemyShip> gunLoadingChecker;
+        private SpaceObject target;
 
         public event Action<SpaceActionEventArgs> OnDestroy;
-
+        public event Action<SpaceActionEventArgs> OnShoot;
 
         public EnemyController(ISpaceObjectFactory<EnemyShip> factory) : base(factory)
         {
-            targetUpdater = new TargetUpdater();
+            destinationUpdater = new DestinationUpdater<EnemyShip>(objects);
+            gunLoadingChecker = new GunLoadingChecker<EnemyShip>(objects);
+            gunLoadingChecker.OnGunLoaded += (ship) => OnGunLoaded(ship);
+        }
+
+        private void OnGunLoaded(EnemyShip ship)
+        {
+            Vector2 direction = (target.Position - ship.Position).normalized;
+            ship.SetShotTimeNow();
+            OnShoot?.Invoke(new SpaceActionEventArgs(ship.Position, direction, Quaternion.identity));
         }
 
         public override void Start()
@@ -36,14 +48,16 @@ namespace Asteroids.Controllers
                 SpawnRandomEnemy();
                 lastTimeEnemySpawned = Time.time;
             }
-            targetUpdater.Update();
+            destinationUpdater.Update();
+            gunLoadingChecker.Update();
             SpaceObjectTeleporter.TeleportIfLeaveBoundsGroup(objects);
             SpaceObjectMover.MoveGroup(objects);
         }
 
         public void SetTarget(SpaceObject target)
         {
-            targetUpdater.SetTarget(target);
+            this.target = target;
+            destinationUpdater.SetTarget(target);
         }
 
         private void SpawnRandomEnemy()
@@ -51,7 +65,6 @@ namespace Asteroids.Controllers
             Vector2 position = BoundsHelper.GetInBoundsRandomPosition();
             var enemy = factory.Create(position, Vector2.zero, Quaternion.identity, OnCollision);
             objects.Add(enemy);
-            targetUpdater.AddSpaceObject(enemy);
         }
 
         private void OnCollision(SpaceObjectView who, GameObject withWhom)
