@@ -3,7 +3,6 @@ using Asteroids.Model;
 using Asteroids.Services;
 using Asteroids.View;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Asteroids.Controllers
@@ -18,7 +17,7 @@ namespace Asteroids.Controllers
         private SpaceObject target;
 
         public event Action<SpaceActionEventArgs> OnDestroy;
-        public event Action<SpaceActionEventArgs> OnShoot;
+        public event Action<SpaceActionEventArgs> OnGunFire;
 
         public EnemyController(ISpaceObjectFactory<EnemyShip> factory) : base(factory)
         {
@@ -31,7 +30,7 @@ namespace Asteroids.Controllers
         {
             Vector2 direction = (target.Position - ship.Position).normalized;
             ship.SetShotTimeNow();
-            OnShoot?.Invoke(new SpaceActionEventArgs(ship.Position, direction, Quaternion.identity));
+            OnGunFire?.Invoke(new SpaceActionEventArgs(ship.Position, direction, Quaternion.identity));
         }
 
         public override void Start()

@@ -7,21 +7,18 @@ using UnityEngine;
 
 public class GameStarter : MonoBehaviour
 {
-    // fix angle in view
-    // fix space movement
-    // check all event subscriptions
     [SerializeField] private UIView uiView;
     [SerializeField] private SpaceObjectModels models;
     [SerializeField] private SpaceObjectPrefabs prefabs;
 
     private UIController uiController;
     private PlayerController playerController;
-    private BaseGunController playerGunController;
+    private BaseBulletsController playerGunController;
     private PlayerLaserController playerLaserController;
     private BigAsteroidController bigAsteroidController;
     private SmallAsteroidController smallAsteroidController;
     private EnemyController enemyController;
-    private EnemyGunController enemyAmmoController;
+    private EnemyBulletsController enemyGunController;
 
     private List<IController> controllers;
 
@@ -30,6 +27,19 @@ public class GameStarter : MonoBehaviour
         InitializeControllers();
         AddControllersToList();
         SubscribeControllers();
+    }
+
+
+    private void OnDestroy()
+    {
+        playerController.OnPlayerSpawned -= (ship) => enemyController.SetTarget(ship);
+        playerController.OnPlayerSpawned -= (ship) => uiController.UpdateModel(ship);
+        playerController.OnDestroy -= (eventArgs) => uiController.OnPlayerDestroy();
+        playerController.OnDestroy -= (eventArgs) => OnPlayerDestroy();
+        playerController.OnGunFire -= (eventArgs) => playerGunController.Fire(eventArgs);
+        enemyController.OnGunFire -= (eventArgs) => enemyGunController.Fire(eventArgs);
+        bigAsteroidController.OnDestroy -= (eventArgs) => smallAsteroidController.SpawnAsteroids(eventArgs.position);
+        uiController.OnStartButtonClick -= () => OnStartButtonClick();
     }
 
     private void InitializeControllers()
@@ -44,12 +54,12 @@ public class GameStarter : MonoBehaviour
         SpaceObjectFactory smallAsteroidFactory = new SpaceObjectFactory(models.AsteroidSmall, prefabs.AsteroidSmall);
 
         playerController = new PlayerController(shipFactory);
-        playerGunController = new PlayerGunController(playerBulletFactory);
+        playerGunController = new PlayerBulletsController(playerBulletFactory);
         //playerLaserController = new PlayerLaserController(laserFactory);
         bigAsteroidController = new BigAsteroidController(bigAsteroidFactory);
         smallAsteroidController = new SmallAsteroidController(smallAsteroidFactory);
         enemyController = new EnemyController(enemyFactory);
-        enemyAmmoController = new EnemyGunController(enemyAmmoFactory);
+        enemyGunController = new EnemyBulletsController(enemyAmmoFactory);
 
         uiController = new UIController(uiView);
     }
@@ -64,7 +74,7 @@ public class GameStarter : MonoBehaviour
         controllers.Add(bigAsteroidController);
         controllers.Add(smallAsteroidController);
         controllers.Add(enemyController);
-        controllers.Add(enemyAmmoController);
+        controllers.Add(enemyGunController);
     }
 
     private void SubscribeControllers()
@@ -73,9 +83,9 @@ public class GameStarter : MonoBehaviour
         playerController.OnPlayerSpawned += (ship) => uiController.UpdateModel(ship);
         playerController.OnDestroy += (eventArgs) => uiController.OnPlayerDestroy();
         playerController.OnDestroy += (eventArgs) => OnPlayerDestroy();
-        playerController.OnFireSlot1 += (eventArgs) => playerGunController.OnShoot(eventArgs);
+        playerController.OnGunFire += (eventArgs) => playerGunController.Fire(eventArgs);
+        enemyController.OnGunFire += (eventArgs) => enemyGunController.Fire(eventArgs);
         bigAsteroidController.OnDestroy += (eventArgs) => smallAsteroidController.SpawnAsteroids(eventArgs.position);
-        //playerController.OnFireSlot2 += (position, direction) => uiController.OnPlayerDestroy();
         uiController.OnStartButtonClick += () => OnStartButtonClick();
     }
 

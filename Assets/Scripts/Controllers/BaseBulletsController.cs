@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace Asteroids.Controllers
 {
-    public abstract class BaseGunController : BaseObjectController<Ammo>
+    public abstract class BaseBulletsController : BaseObjectController<Ammo>
     {
         private AmmoLifeTimeChecker ammoLifeTimeChecker;
 
 
-        public BaseGunController(ISpaceObjectFactory<Ammo> factory) : base(factory)
+        public BaseBulletsController(ISpaceObjectFactory<Ammo> factory) : base(factory)
         {
             ammoLifeTimeChecker = new AmmoLifeTimeChecker(objects);
             ammoLifeTimeChecker.OnLifeTimeExpired += (ammo) => Destroy(ammo);
@@ -30,7 +30,7 @@ namespace Asteroids.Controllers
             SpaceObjectMover.MoveGroup(objects);
         }
 
-        public void OnShot(SpaceActionEventArgs args)
+        public void Fire(SpaceActionEventArgs args)
         {
             var projectile = factory.Create(args.position, args.direction, args.rotation, OnCollision);
             projectile.SetLaunchTime(Time.time);

@@ -16,15 +16,15 @@ namespace Asteroids.Controllers
 
         public event Action<Ship> OnPlayerSpawned;
         public event Action<SpaceActionEventArgs> OnDestroy;
-        public event Action<SpaceActionEventArgs> OnFireSlot1;
-        public event Action<SpaceActionEventArgs> OnFireSlot2;
+        public event Action<SpaceActionEventArgs> OnGunFire;
+        public event Action<SpaceActionEventArgs> OnLaserFire;
 
 
         public PlayerController(ISpaceObjectFactory<Ship> factory) : base(factory)
         {
             input = new PlayerInput();
-            input.Player.Fire1.performed += (context) => OnGunFire();
-            input.Player.Fire2.performed += (context) => OnFireSlot2?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, Quaternion.identity));
+            input.Player.Fire1.performed += (context) => OnGunSlotFire();
+            input.Player.Fire2.performed += (context) => OnLaserFire?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, Quaternion.identity));
             input.Enable();
             shipMover = new PlayerShipMover();
         }
@@ -50,10 +50,10 @@ namespace Asteroids.Controllers
                 shipMover.Move(Vector3.zero);
         }
         
-        private void OnGunFire()
+        private void OnGunSlotFire()
         {
             ship.SetShotTimeNow();
-            OnFireSlot1?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, ship.Rotation));
+            OnGunFire?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, ship.Rotation));
         }
 
         private void OnCollision(SpaceObjectView who, GameObject withWhom)

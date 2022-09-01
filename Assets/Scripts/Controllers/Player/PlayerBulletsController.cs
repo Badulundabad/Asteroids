@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace Asteroids.Controllers
 {
-    public class PlayerGunController : BaseGunController
+    public class PlayerBulletsController : BaseBulletsController
     {
         public event Action<SpaceActionEventArgs> OnDestroy;
 
 
-        public PlayerGunController(ISpaceObjectFactory<Ammo> factory) : base(factory) { }
+        public PlayerBulletsController(ISpaceObjectFactory<Ammo> factory) : base(factory) { }
 
         protected override void OnCollision(SpaceObjectView who, GameObject withWhom)
         {
