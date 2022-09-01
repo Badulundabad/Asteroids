@@ -23,7 +23,7 @@ namespace Asteroids.Controllers
         public PlayerController(ISpaceObjectFactory<Ship> factory) : base(factory)
         {
             input = new PlayerInput();
-            input.Player.Fire1.performed += (context) => OnFireSlot1?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, ship.Rotation));
+            input.Player.Fire1.performed += (context) => OnGunFire();
             input.Player.Fire2.performed += (context) => OnFireSlot2?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, Quaternion.identity));
             input.Enable();
             shipMover = new PlayerShipMover();
@@ -48,6 +48,12 @@ namespace Asteroids.Controllers
                 shipMover.Move(input.Player.Move.ReadValue<Vector2>());
             else
                 shipMover.Move(Vector3.zero);
+        }
+        
+        private void OnGunFire()
+        {
+            ship.SetShotTimeNow();
+            OnFireSlot1?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, ship.Rotation));
         }
 
         private void OnCollision(SpaceObjectView who, GameObject withWhom)
