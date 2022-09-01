@@ -30,9 +30,10 @@ namespace Asteroids.Controllers
             SpaceObjectMover.MoveGroup(objects);
         }
 
-        public void OnShoot(SpaceActionEventArgs args)
+        public void OnShot(SpaceActionEventArgs args)
         {
             var projectile = factory.Create(args.position, args.direction, args.rotation, OnCollision);
+            projectile.SetLaunchTime(Time.time);
             objects.Add(projectile);
         }
 
