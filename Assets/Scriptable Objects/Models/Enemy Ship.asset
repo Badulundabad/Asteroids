@@ -16,4 +16,4 @@ MonoBehaviour:
   rotationSpeed: 0
   maxSpeed: 1
   acceleration: 0
-  bulletFiringRate: 2
+  bulletFiringRate: 5
