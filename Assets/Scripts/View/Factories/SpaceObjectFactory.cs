@@ -19,7 +19,7 @@ namespace Asteroids.View.Factories
         {
             this.model = model;
             this.prefab = prefab;
-            root = new GameObject("AsteroidsRoot");
+            root = new GameObject("SpaceObjectsRoot");
             objects = new Dictionary<SpaceObject, SpaceObjectView>();
         }
 
@@ -67,7 +67,7 @@ namespace Asteroids.View.Factories
                 objects.Remove(model);
             }
             GameObject.Destroy(root);
-            root = new GameObject("AsteroidsRoot");
+            root = new GameObject("SpaceObjectsRoot");
         }
     }
 }
