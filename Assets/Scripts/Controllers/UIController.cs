@@ -1,6 +1,8 @@
 ﻿using Asteroids.Model;
 using Asteroids.View;
 using System;
+using UnityEngine;
+
 namespace Asteroids.Controllers
 {
     public class UIController : IController
@@ -40,7 +42,7 @@ namespace Asteroids.Controllers
             if (model == null || !viewModel.IsGameStarted) return;
 
             viewModel.Position = model.Position.ToString();
-            viewModel.Angle = model.Rotation.z.ToString();
+            viewModel.Angle = Mathf.RoundToInt(model.Rotation.eulerAngles.z).ToString();
             viewModel.Speed = model.Speed.ToString();
             viewModel.LaserChargeAmount = "0";
             viewModel.LaserChargeTimer = "0";
