@@ -29,7 +29,7 @@ namespace Asteroids.View.Factories
             SpaceObjectView view = null;
             if (instance.TryGetComponent<SpaceObjectView>(out view))
             {
-                var data = new Ship(model.Speed, model.MaxSpeed, model.Acceleration, model.RotationSpeed, model.BulletFiringRate);
+                var data = new Ship(model.Speed, model.MaxSpeed, model.Acceleration, model.RotationSpeed, model.GunCooldown);
                 data.SetPosition(position);
                 data.SetRotation(rotation);
                 data.SetVelocity(direction);

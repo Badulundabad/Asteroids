@@ -7,10 +7,10 @@ namespace Asteroids.Model.ScriptableObjects
     {
         [SerializeField] private float maxSpeed;
         [SerializeField] private float acceleration;
-        [SerializeField] private float bulletFiringRate;
+        [SerializeField] private float gunCooldown;
 
         public float MaxSpeed { get => maxSpeed; }
         public float Acceleration { get => acceleration; }
-        public float BulletFiringRate { get => bulletFiringRate; }
+        public float GunCooldown { get => gunCooldown; }
     }
 }

@@ -2,14 +2,14 @@
 
 namespace Asteroids.Model
 {
-    public class PlayerShip : Ship
+    public sealed class PlayerShip : Ship
     {
         public float LaserChargeAmount { get; private set; }
         public float LaserChargeTime { get; private set; }
         public float CurrentLaserChargeTime { get; private set; }
 
-        public PlayerShip(float speed, float maxSpeed, float acceleration, float rotationSpeed, float bulletFiringRate, float laserChargeAmount, float laserChargeTime) 
-                    : base(speed, maxSpeed, acceleration, rotationSpeed, bulletFiringRate)
+        public PlayerShip(float speed, float maxSpeed, float acceleration, float rotationSpeed, float gunCooldown, float laserChargeAmount, float laserChargeTime) 
+                    : base(speed, maxSpeed, acceleration, rotationSpeed, gunCooldown)
         {
             LaserChargeAmount = laserChargeAmount;
             LaserChargeTime = laserChargeTime;

@@ -28,7 +28,7 @@ namespace Asteroids.View.Factories
             SpaceObjectView view = null;
             if (instance.TryGetComponent<SpaceObjectView>(out view))
             {
-                var ship = new EnemyShip(model.Speed, model.MaxSpeed, model.Acceleration, model.RotationSpeed, model.BulletFiringRate);
+                var ship = new EnemyShip(model.Speed, model.MaxSpeed, model.Acceleration, model.RotationSpeed, model.GunCooldown);
                 ship.SetPosition(position);
                 ship.SetRotation(rotation);
                 ship.SetVelocity(direction);
