@@ -15,7 +15,7 @@ namespace Asteroids.Controllers
 
         protected override void OnCollision(SpaceObjectView who, GameObject withWhom)
         {
-            if (withWhom.tag == Tags.PLAYER)
+            if (withWhom.tag == Tags.PLAYER || withWhom.tag == Tags.NEUTRAL)
             {
                 Vector2 position = who.model.Position;
                 Vector2 direction = who.model.Velocity;
