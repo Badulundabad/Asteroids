@@ -1,7 +1,6 @@
 ﻿using Asteroids.Model;
 using Asteroids.Model.ScriptableObjects;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -31,12 +30,12 @@ namespace Asteroids.View.Factories
 
         public Ammo Create(Vector2 position, Vector2 direction, Quaternion rotation, Action<SpaceObjectView, GameObject> onCollision)
         {
-            int rnd = UnityEngine.Random.Range(0, prefabs.Count - 1);
+            int rnd = UnityEngine.Random.Range(0, prefabs.Count);
             GameObject instance = GameObject.Instantiate(prefabs[rnd], position, rotation, root.transform);
             SpaceObjectView view = null;
             if (instance.TryGetComponent<SpaceObjectView>(out view))
             {
-                var ammo = new Ammo(model.Speed, model.RotationSpeed, model.MaxLifeTime, Time.time); 
+                var ammo = new Ammo(model.Speed, model.RotationSpeed, model.MaxLifeTime); 
                 ammo.SetPosition(position);
                 ammo.SetRotation(rotation);
                 ammo.SetVelocity(direction);
