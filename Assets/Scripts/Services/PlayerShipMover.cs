@@ -5,8 +5,7 @@ namespace Asteroids.Services
 {
     public class PlayerShipMover
     {
-        private readonly float speedAttenuation = 0.5f;
-        private readonly float angleModifier = 0.3f;
+        private readonly float speedAttenuation = 1f;
 
         private Ship ship;
 
@@ -24,14 +23,16 @@ namespace Asteroids.Services
 
             if (input.y > 0)
             {
-                float delta = (ship.MaxSpeed - ship.Speed + angleModifier) * Time.deltaTime;
-                Vector3 velocity = Vector3.Slerp(ship.Velocity, ship.Rotation * Vector3.up, delta);
+                float rotationDif = Vector2.Dot(ship.Velocity.normalized, (ship.Rotation * Vector3.up).normalized);
+                float speedDif = (ship.MaxSpeed * 1.05f) - ship.Speed;
+                Vector3 velocity = Vector3.Slerp(ship.Velocity, ship.Rotation * Vector3.up, speedDif * 0.005f * Time.time);
                 ship.SetVelocity(velocity);
+                ship.SetSpeed(ship.Speed + (rotationDif * Time.deltaTime));
             }
-
-            float speedDelta = input.y > 0 ? input.y * ship.Acceleration : -speedAttenuation;
-            speedDelta *= Time.deltaTime;
-            ship.SetSpeed(ship.Speed + speedDelta);
+            else
+            {
+                ship.SetSpeed(ship.Speed + (-speedAttenuation * Time.deltaTime));
+            }
 
             Vector2 position = ship.Position + (ship.Velocity * ship.Speed * Time.deltaTime);
             ship.SetPosition(position);
