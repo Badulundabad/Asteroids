@@ -16,6 +16,7 @@ namespace Asteroids.Model
             MaxSpeed = maxSpeed;
             Acceleration = acceleration;
             GunCooldown = gunCooldown;
+            LastShotTime = Time.time - GunCooldown;
         }
 
         public Ship(ShipData data) : base(data)
@@ -23,6 +24,7 @@ namespace Asteroids.Model
             MaxSpeed = data.MaxSpeed;
             Acceleration = data.Acceleration;
             GunCooldown = data.GunCooldown;
+            LastShotTime = Time.time - GunCooldown;
         }
 
         public void SetSpeed(float speed)
