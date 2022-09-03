@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Asteroids.View.Factories
 {
-    public class PlayerShipFactory : ISpaceObjectFactory<Ship>
+    public class PlayerShipFactory : ISpaceObjectFactory<PlayerShip>
     {
         private GameObject prefab;
         private PlayerShipData model;
@@ -23,13 +23,13 @@ namespace Asteroids.View.Factories
             objects = new Dictionary<Ship, SpaceObjectView>();
         }
 
-        public Ship Create(Vector2 position, Vector2 direction, Quaternion rotation, Action<SpaceObjectView, GameObject> onCollision)
+        public PlayerShip Create(Vector2 position, Vector2 direction, Quaternion rotation, Action<SpaceObjectView, GameObject> onCollision)
         {
             GameObject instance = GameObject.Instantiate(prefab, position, rotation, root.transform);
             SpaceObjectView view = null;
             if (instance.TryGetComponent<SpaceObjectView>(out view))
             {
-                var data = new Ship(model.Speed, model.MaxSpeed, model.Acceleration, model.RotationSpeed, model.GunCooldown);
+                var data = new PlayerShip(model);
                 data.SetPosition(position);
                 data.SetRotation(rotation);
                 data.SetVelocity(direction);
@@ -44,12 +44,12 @@ namespace Asteroids.View.Factories
             return null;
         }
 
-        public bool TryGetView(Ship model, out SpaceObjectView view)
+        public bool TryGetView(PlayerShip model, out SpaceObjectView view)
         {
             return objects.TryGetValue(model, out view);
         }
 
-        public void Destroy(Ship obj)
+        public void Destroy(PlayerShip obj)
         {
             SpaceObjectView view;
             if (objects.TryGetValue(obj, out view))
