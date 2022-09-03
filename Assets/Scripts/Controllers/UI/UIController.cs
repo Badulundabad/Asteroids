@@ -7,7 +7,7 @@ namespace Asteroids.Controllers
 {
     public class UIController : IController
     {
-        private Ship model;
+        private PlayerShip model;
         private UIViewModel viewModel;
 
         public bool IsRunning { get; private set; }
@@ -43,12 +43,13 @@ namespace Asteroids.Controllers
 
             viewModel.Position = model.Position.ToString();
             viewModel.Angle = Mathf.RoundToInt(model.Rotation.eulerAngles.z).ToString();
-            viewModel.Speed = model.Speed.ToString();
-            viewModel.LaserChargeAmount = "0";
-            viewModel.LaserChargeTimer = "0";
+
+            viewModel.Speed =  MathF.Round(model.Speed, 1).ToString();
+            viewModel.LaserCharges = model.CurrentLaserCharges.ToString();
+            viewModel.LaserChargingTimer = MathF.Round(model.CurrentLaserChargingTimer, 1).ToString();
         }
 
-        public void UpdateModel(Ship model)
+        public void UpdateModel(PlayerShip model)
         {
             this.model = model;
         }
@@ -59,8 +60,8 @@ namespace Asteroids.Controllers
             viewModel.Position = String.Empty;
             viewModel.Angle = String.Empty;
             viewModel.Speed = String.Empty;
-            viewModel.LaserChargeAmount = String.Empty;
-            viewModel.LaserChargeTimer = String.Empty;
+            viewModel.LaserCharges = String.Empty;
+            viewModel.LaserChargingTimer = String.Empty;
         }
     }
 }

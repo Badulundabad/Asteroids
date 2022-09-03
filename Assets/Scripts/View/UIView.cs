@@ -47,8 +47,8 @@ namespace Asteroids.View
                 position.text = model.Position;
                 angle.text = model.Angle;
                 speed.text = model.Speed;
-                laserChargeAmount.text = model.LaserChargeAmount;
-                laserChargeTimer.text = model.LaserChargeTimer;
+                laserChargeAmount.text = model.LaserCharges;
+                laserChargeTimer.text = model.LaserChargingTimer;
             }
         }
 

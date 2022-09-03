@@ -6,7 +6,7 @@
         public string Position { get; set; }
         public string Angle { get; set; }
         public string Speed { get; set; }
-        public string LaserChargeAmount { get; set; }
-        public string LaserChargeTimer { get; set; }
+        public string LaserCharges { get; set; }
+        public string LaserChargingTimer { get; set; }
     }
 }
