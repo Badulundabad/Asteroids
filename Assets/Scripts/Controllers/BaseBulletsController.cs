@@ -7,12 +7,12 @@ namespace Asteroids.Controllers
 {
     public abstract class BaseBulletsController : BaseObjectController<Ammo>
     {
-        private AmmoLifeTimeChecker ammoLifeTimeChecker;
+        private AmmoLifeTimeChecker<Ammo> ammoLifeTimeChecker;
 
 
         public BaseBulletsController(ISpaceObjectFactory<Ammo> factory) : base(factory)
         {
-            ammoLifeTimeChecker = new AmmoLifeTimeChecker(objects);
+            ammoLifeTimeChecker = new AmmoLifeTimeChecker<Ammo>(objects);
             ammoLifeTimeChecker.OnLifeTimeExpired += (ammo) => Destroy(ammo);
         }
 
