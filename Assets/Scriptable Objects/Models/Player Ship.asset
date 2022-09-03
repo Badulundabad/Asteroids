@@ -16,6 +16,7 @@ MonoBehaviour:
   rotationSpeed: 150
   maxSpeed: 2
   acceleration: 250
-  gunCooldown: 0.5
-  laserChargeAmount: 10
-  laserChargeTime: 3
+  gunCooldown: 0.1
+  laserCharges: 10
+  maxLaserCharges: 10
+  laserChargingTime: 5

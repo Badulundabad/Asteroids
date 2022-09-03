@@ -5,26 +5,34 @@ namespace Asteroids.Model
 {
     public sealed class PlayerShip : Ship
     {
-        public float LaserChargeAmount { get; private set; }
-        public float LaserChargeTime { get; private set; }
-        public float CurrentLaserChargeTime { get; private set; }
+        public int MaxLaserCharges { get; private set; }
+        public int CurrentLaserCharges { get; private set; }
+        public float LaserChargingTime { get; private set; }
+        public float CurrentLaserChargingTimer { get; private set; }
 
-        public PlayerShip(float speed, float maxSpeed, float acceleration, float rotationSpeed, float gunCooldown, float laserChargeAmount, float laserChargeTime) 
+        public PlayerShip(float speed, float maxSpeed, float acceleration, float rotationSpeed, float gunCooldown, int laserCharges, int maxLaserCharges,float laserChargingTime) 
                     : base(speed, maxSpeed, acceleration, rotationSpeed, gunCooldown)
         {
-            LaserChargeAmount = laserChargeAmount;
-            LaserChargeTime = laserChargeTime;
+            CurrentLaserCharges = laserCharges;
+            MaxLaserCharges = maxLaserCharges;
+            LaserChargingTime = laserChargingTime;
         }
 
         public PlayerShip(PlayerShipData data) : base(data)
         {
-            LaserChargeAmount = data.LaserChargeAmount;
-            LaserChargeTime = data.LaserChargeTime;
+            CurrentLaserCharges = data.LaserCharges;
+            MaxLaserCharges = data.MaxLaserCharges;
+            LaserChargingTime = data.LaserChargingTime;
         }
 
-        public void UpdateLaserChargeTime(float value)
+        public void UpdateLaserChargingTime(float value)
         {
-            CurrentLaserChargeTime = Mathf.Clamp(value, 0, LaserChargeTime);
+            CurrentLaserChargingTimer = Mathf.Clamp(value, 0, LaserChargingTime);
+        }
+
+        public void SetLaserCharges(int value)
+        {
+            CurrentLaserCharges = Mathf.Clamp(value, 0, MaxLaserCharges);
         }
     }
 }
