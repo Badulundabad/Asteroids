@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace Asteroids.Services
 {
-    public class AmmoLifeTimeChecker
+    public class AmmoLifeTimeChecker<T> where T : Ammo
     {
-        private List<Ammo> ammos;
-        public event Action<Ammo> OnLifeTimeExpired;
+        private List<T> ammos;
+        public event Action<T> OnLifeTimeExpired;
 
-        public AmmoLifeTimeChecker(List<Ammo> ammos)
+        public AmmoLifeTimeChecker(List<T> ammos)
         {
             this.ammos = ammos;
         }
@@ -19,7 +19,7 @@ namespace Asteroids.Services
         {
             for (int i = 0; i < ammos.Count; i++)
             {
-                Ammo ammo = ammos[i];
+                T ammo = ammos[i];
                 if (ammo.LaunchTime < Time.time - ammo.MaxLifeTime)
                 {
                     OnLifeTimeExpired?.Invoke(ammo);
