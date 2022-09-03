@@ -35,6 +35,7 @@ namespace Asteroids.Controllers
 
         public override void Start()
         {
+            lastTimeEnemySpawned = Time.time;
             IsRunning = true;
         }
 
