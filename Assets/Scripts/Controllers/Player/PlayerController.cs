@@ -24,7 +24,7 @@ namespace Asteroids.Controllers
         {
             input = new PlayerInput();
             input.Player.Fire1.performed += (context) => OnGunSlotFire();
-            input.Player.Fire2.performed += (context) => OnLaserFire?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, Quaternion.identity));
+            input.Player.Fire2.performed += (context) => OnLaserSlotFire();
             input.Enable();
             shipMover = new PlayerShipMover();
         }
@@ -54,6 +54,12 @@ namespace Asteroids.Controllers
         {
             ship.SetShotTimeNow();
             OnGunFire?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, ship.Rotation));
+        }
+
+        private void OnLaserSlotFire()
+        {
+            ship.SetShotTimeNow();
+            OnLaserFire?.Invoke(new SpaceActionEventArgs(ship.Position, ship.Rotation * Vector2.up, ship.Rotation));
         }
 
         private void OnCollision(SpaceObjectView who, GameObject withWhom)
