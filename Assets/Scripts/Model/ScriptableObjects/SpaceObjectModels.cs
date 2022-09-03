@@ -11,7 +11,7 @@ namespace Asteroids.Model
         [SerializeField] private AmmoData bullet;
         [SerializeField] private AmmoData enemyAmmo;
         [SerializeField] private ShipData enenmyShip;
-        [SerializeField] private AmmoData laser;
+        [SerializeField] private LaserData laser;
         [SerializeField] private PlayerShipData playerShip;
 
         public SpaceObjectData AsteroidBig { get => asteroidBig; }
@@ -19,7 +19,7 @@ namespace Asteroids.Model
         public AmmoData Bullet { get => bullet; }
         public AmmoData EnemyAmmo { get => enemyAmmo; }
         public ShipData EnemyShip { get => enenmyShip; }
-        public AmmoData Laser { get => laser; }
+        public LaserData Laser { get => laser; }
         public PlayerShipData PlayerShip { get => playerShip; }
     }
 }
