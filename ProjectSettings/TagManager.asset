@@ -4,11 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - ship
-  - bullet
-  - laser
-  - asteroid
-  - vegetable
+  - PLAYER
+  - ENEMY
+  - NEUTRAL
+  - PLAYERAMMO
+  - ENEMYAMMO
   layers:
   - Default
   - TransparentFX

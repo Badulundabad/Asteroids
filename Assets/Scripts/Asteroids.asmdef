@@ -1,7 +1,14 @@
 {
     "name": "Asteroids",
-    "rootNamespace": "Asteroids",
-    "references": [],
+    "rootNamespace": "",
+    "references": [
+        "GUID:6046fbf7e78c3f447a2ed00d23c9f1a7",
+        "GUID:9d89581ce51f07343a521b5cfd227a36",
+        "GUID:91aab4ef063cd4f46a725094697603e8",
+        "GUID:5cda7dca8dcbed14991a33ce2eaa8594",
+        "GUID:975b34463b12cd94db03b690f1b31d31",
+        "GUID:008207f2c02410e4a99eac0a9933452e"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
