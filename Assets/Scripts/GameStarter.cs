@@ -46,6 +46,7 @@ public class GameStarter : MonoBehaviour
     {
         PlayerShipFactory shipFactory = new PlayerShipFactory(models.PlayerShip, prefabs.PlayerShip);
         AmmoFactory playerBulletFactory = new AmmoFactory(models.Bullet, prefabs.Bullet);
+        LaserFactory laserFactory = new LaserFactory(models.Laser, prefabs.Laser);
 
         EnemyShipFactory enemyFactory = new EnemyShipFactory(models.EnemyShip, prefabs.EnemyShip);
         AmmoFactory enemyAmmoFactory = new AmmoFactory(models.EnemyAmmo, prefabs.EnemyAmmo1, prefabs.EnemyAmmo2, prefabs.EnemyAmmo3);
@@ -55,7 +56,7 @@ public class GameStarter : MonoBehaviour
 
         playerController = new PlayerController(shipFactory);
         playerGunController = new PlayerBulletsController(playerBulletFactory);
-        //playerLaserController = new PlayerLaserController(laserFactory);
+        playerLaserController = new PlayerLaserController(laserFactory);
         bigAsteroidController = new BigAsteroidController(bigAsteroidFactory);
         smallAsteroidController = new SmallAsteroidController(smallAsteroidFactory);
         enemyController = new EnemyController(enemyFactory);
@@ -70,7 +71,7 @@ public class GameStarter : MonoBehaviour
         controllers.Add(uiController);
         controllers.Add(playerController);
         controllers.Add(playerGunController);
-        //controllers.Add(playerLaserController);
+        controllers.Add(playerLaserController);
         controllers.Add(bigAsteroidController);
         controllers.Add(smallAsteroidController);
         controllers.Add(enemyController);
@@ -81,9 +82,11 @@ public class GameStarter : MonoBehaviour
     {
         playerController.OnPlayerSpawned += (ship) => enemyController.SetTarget(ship);
         playerController.OnPlayerSpawned += (ship) => uiController.UpdateModel(ship);
+        playerController.OnPlayerSpawned += (ship) => playerLaserController.SetLaserOwner(ship);
         playerController.OnDestroy += (eventArgs) => uiController.OnPlayerDestroy();
         playerController.OnDestroy += (eventArgs) => OnPlayerDestroy();
         playerController.OnGunFire += (eventArgs) => playerGunController.Fire(eventArgs);
+        playerController.OnLaserFire += (eventArgs) => playerLaserController.Fire(eventArgs);
         enemyController.OnGunFire += (eventArgs) => enemyGunController.Fire(eventArgs);
         bigAsteroidController.OnDestroy += (eventArgs) => smallAsteroidController.SpawnAsteroids(eventArgs.position);
         uiController.OnStartButtonClick += () => OnStartButtonClick();
