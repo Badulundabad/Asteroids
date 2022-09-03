@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Asteroids.Model.ScriptableObjects;
+using UnityEngine;
 
 namespace Asteroids.Model
 {
@@ -9,12 +10,19 @@ namespace Asteroids.Model
         public float GunCooldown { get; protected set; }
         public float LastShotTime { get; protected set; }
 
-        public Ship(float speed, float maxSpeed, float acceleration, float rotationSpeed, float gunCooldown) 
+        public Ship(float speed, float maxSpeed, float acceleration, float rotationSpeed, float gunCooldown)
             : base(speed, rotationSpeed)
         {
             MaxSpeed = maxSpeed;
             Acceleration = acceleration;
             GunCooldown = gunCooldown;
+        }
+
+        public Ship(ShipData data) : base(data)
+        {
+            MaxSpeed = data.MaxSpeed;
+            Acceleration = data.Acceleration;
+            GunCooldown = data.GunCooldown;
         }
 
         public void SetSpeed(float speed)

@@ -1,14 +1,21 @@
-﻿namespace Asteroids.Model
-{
-    public sealed class Ammo : SpaceObject
-    {
-        public float MaxLifeTime { get; private set; }
-        public float LaunchTime { get; private set; }
+﻿using Asteroids.Model.ScriptableObjects;
 
-        public Ammo(float spped, float rotationSpeed, float maxLifeTime)
-            : base(spped, rotationSpeed)
+namespace Asteroids.Model
+{
+    public class Ammo : SpaceObject
+    {
+        public float MaxLifeTime { get; protected set; }
+        public float LaunchTime { get; protected set; }
+
+        public Ammo(float speed, float rotationSpeed, float maxLifeTime)
+            : base(speed, rotationSpeed)
         {
             MaxLifeTime = maxLifeTime;
+        }
+
+        public Ammo(AmmoData data) : base(data)
+        {
+            MaxLifeTime = data.MaxLifeTime;
         }
 
         public void SetLaunchTime(float time)

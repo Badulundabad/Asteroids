@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Asteroids.Model.ScriptableObjects;
+using UnityEngine;
 
 namespace Asteroids.Model
 {
@@ -13,6 +14,12 @@ namespace Asteroids.Model
         {
             LaserChargeAmount = laserChargeAmount;
             LaserChargeTime = laserChargeTime;
+        }
+
+        public PlayerShip(PlayerShipData data) : base(data)
+        {
+            LaserChargeAmount = data.LaserChargeAmount;
+            LaserChargeTime = data.LaserChargeTime;
         }
 
         public void UpdateLaserChargeTime(float value)

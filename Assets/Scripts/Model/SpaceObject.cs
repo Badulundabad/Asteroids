@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Asteroids.Model.ScriptableObjects;
+using UnityEngine;
 
 namespace Asteroids.Model
 {    
@@ -14,6 +15,12 @@ namespace Asteroids.Model
         {
             Speed = speed;
             RotationSpeed = rotationSpeed;
+        }
+
+        public SpaceObject(SpaceObjectData data)
+        {
+            Speed = data.Speed;
+            RotationSpeed = data.RotationSpeed;
         }
 
         public void SetPosition(Vector2 position)
