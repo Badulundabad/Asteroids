@@ -9,6 +9,7 @@ namespace Asteroids.View
     public class UIView : MonoBehaviour
     {
         [SerializeField] private Button startButton;
+        [SerializeField] private GameObject menu;
         [SerializeField] private GameObject shipParams;
         [SerializeField] private TextMeshProUGUI position;
         [SerializeField] private TextMeshProUGUI angle;
@@ -28,7 +29,7 @@ namespace Asteroids.View
         private void Start()
         {
             startButton.onClick.AddListener(OnStartButtonClicked);
-            startButton.gameObject.SetActive(true);
+            menu.gameObject.SetActive(true);
             shipParams.SetActive(false);
         }
 
@@ -38,7 +39,7 @@ namespace Asteroids.View
 
             shipParams.SetActive(model.IsGameStarted);
 
-            startButton.gameObject.SetActive(!model.IsGameStarted);
+            menu.gameObject.SetActive(!model.IsGameStarted);
 
             if (model.IsGameStarted)
             {
