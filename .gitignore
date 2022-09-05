@@ -1,5 +1,6 @@
 [Bb]uild/
 [Bb]uilds/
+[Ii]mports/
 [Ll]ibrary/
 [Ll]ogs/
 [Oo]bj/
@@ -52,4 +53,5 @@ sysinfo.txt
 crashlytics-build.properties
 
 # Certain folders meta
+[Ii]mports.meta
 [Pp]lugins.meta

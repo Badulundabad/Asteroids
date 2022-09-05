@@ -1,3 +1,4 @@
+using Asteroids.Audio;
 using Asteroids.Controllers;
 using Asteroids.Model;
 using Asteroids.View;
@@ -8,6 +9,7 @@ using UnityEngine;
 public class GameStarter : MonoBehaviour
 {
     [SerializeField] private UIView uiView;
+    [SerializeField] private AudioPlayer audioPlayer;
     [SerializeField] private SpaceObjectModels models;
     [SerializeField] private SpaceObjectPrefabs prefabs;
 
@@ -34,12 +36,23 @@ public class GameStarter : MonoBehaviour
     {
         playerController.OnPlayerSpawned -= (ship) => enemyController.SetTarget(ship);
         playerController.OnPlayerSpawned -= (ship) => uiController.UpdateModel(ship);
+        playerController.OnPlayerSpawned -= (ship) => playerLaserController.SetLaserOwner(ship);
         playerController.OnDestroy -= (eventArgs) => uiController.OnPlayerDestroy();
-        playerController.OnDestroy -= (eventArgs) => OnPlayerDestroy();
+        playerController.OnDestroy -= (eventArgs) => StopAllControllers();
         playerController.OnGunFire -= (eventArgs) => playerGunController.Fire(eventArgs);
+        playerController.OnGunFire -= (eventArgs) => audioPlayer.OnGunShot();
+        playerController.OnLaserFire -= (eventArgs) => playerLaserController.Fire(eventArgs);
+
         enemyController.OnGunFire -= (eventArgs) => enemyGunController.Fire(eventArgs);
+        enemyController.OnDestroy -= (eventArgs) => audioPlayer.OnExplosion();
+
         bigAsteroidController.OnDestroy -= (eventArgs) => smallAsteroidController.SpawnAsteroids(eventArgs.position);
-        uiController.OnStartButtonClick -= () => OnStartButtonClick();
+        bigAsteroidController.OnDestroy -= (eventArgs) => audioPlayer.OnExplosion();
+
+        smallAsteroidController.OnDestroy -= (eventArgs) => audioPlayer.OnExplosion();
+
+        uiController.OnStartButtonClick -= () => StartAllControllers();
+        uiController.OnStartButtonClick -= () => audioPlayer.OnButtonClick();
     }
 
     private void InitializeControllers()
@@ -84,15 +97,25 @@ public class GameStarter : MonoBehaviour
         playerController.OnPlayerSpawned += (ship) => uiController.UpdateModel(ship);
         playerController.OnPlayerSpawned += (ship) => playerLaserController.SetLaserOwner(ship);
         playerController.OnDestroy += (eventArgs) => uiController.OnPlayerDestroy();
-        playerController.OnDestroy += (eventArgs) => OnPlayerDestroy();
+        playerController.OnDestroy += (eventArgs) => StopAllControllers();
         playerController.OnGunFire += (eventArgs) => playerGunController.Fire(eventArgs);
+        playerController.OnGunFire += (eventArgs) => audioPlayer.OnGunShot();
         playerController.OnLaserFire += (eventArgs) => playerLaserController.Fire(eventArgs);
+        playerController.OnLaserFire += (eventArgs) => audioPlayer.OnLaserShot();
+
         enemyController.OnGunFire += (eventArgs) => enemyGunController.Fire(eventArgs);
+        enemyController.OnDestroy += (eventArgs) => audioPlayer.OnExplosion();
+
         bigAsteroidController.OnDestroy += (eventArgs) => smallAsteroidController.SpawnAsteroids(eventArgs.position);
-        uiController.OnStartButtonClick += () => OnStartButtonClick();
+        bigAsteroidController.OnDestroy += (eventArgs) => audioPlayer.OnExplosion();
+
+        smallAsteroidController.OnDestroy += (eventArgs) => audioPlayer.OnExplosion();
+
+        uiController.OnStartButtonClick += () => StartAllControllers();
+        uiController.OnStartButtonClick += () => audioPlayer.OnButtonClick();
     }
 
-    private void OnStartButtonClick()
+    private void StartAllControllers()
     {
         foreach (var controller in controllers)
         {
@@ -100,7 +123,7 @@ public class GameStarter : MonoBehaviour
         }
     }
 
-    private void OnPlayerDestroy()
+    private void StopAllControllers()
     {
         foreach (var controller in controllers)
         {
